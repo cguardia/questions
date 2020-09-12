@@ -15,16 +15,16 @@ var sendDataToServer = function(result) {{
 fetch('{}', {{
     method: 'post',
     headers: {{
-        'Accept': 'application/json, text/plain, */*',
+        'Accept': 'text/html, text/plain, */*',
         'Content-Type': 'application/json'
     }},
-    body: 'json=' + encodeURIComponent(JSON.stringify(result))
+    body: JSON.stringify(result.data)
 }})
 .then(function (response) {{
-    return response.json();
+    return response;
 }})
 .then(function (result) {{
-    alert(result);
+    console.log('Redirect successful');
 }})
 .catch (function (error) {{
     console.log('Request failed', error);
