@@ -63,7 +63,7 @@ class Question(Base):
     indent: int = 0
     title_location: Literal[settings.TITLE_LOCATIONS] = "default"
     description_location: Literal[settings.DESCRIPTION_LOCATIONS] = "default"
-    width: str = "100%"
+    width: str = ""
     max_width: str = "initial"
     min_width: str = "300px"
     use_display_values_in_title: bool = True
