@@ -42,7 +42,7 @@ benefits:
 * Out of the box integration with popular third party widgets, like select2_
   and ckeditor_.
 * Supports the creation of tests and quizzes, by defining "correct" answers to
-  the questions, and optionally setting a meximum time to finish.
+  the questions, and optionally setting a maximum time to finish.
 
 .. _SurveyJS: https://surveyjs.io
 .. _select2: https://select2.org/
@@ -137,9 +137,9 @@ and configure Questions to use your installation, but sometimes this is all
 that's required to get a full working application.
 
 Admittedly, our application doesn't do much, but we get a working form that you
-can fill and submit in your browser. See how easy it is to get a working
-multi-page form with navigation buttons. Also, notice how ``get_json`` is the
-only Flask request call we need to get the form data. 
+can fill and submit in your browser. See how easy it is to get a multi-page
+form with navigation buttons. Also, notice how ``get_json`` is the only Flask
+request call we need to get the form data. 
 
 As the code shows, defining a multiple page form is very simple, and allows us
 to keep the form pages logically separated, and even using them independently
@@ -147,8 +147,7 @@ or in combination with other forms with little additional work.
 
 Finally, take a look at the ``choices_by_url`` parameter in the
 DropdownQuestion, which allows us to get the dropdown choices from separate,
-restful web service.
-
+restful web services.
 
 .. _Flask: https://flask.palletsprojects.com/
 
