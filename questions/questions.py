@@ -95,7 +95,7 @@ class TextQuestion(Question):
 class ChoicesQuestion(Question):
     kind: str = ""
     col_count: int = 4
-    choices: List[Union[str, Dict[str, Union[str, HttpUrl]]]]
+    choices: List[Union[str, Dict[str, Union[str, HttpUrl]]]] = []
     choices_by_url: Dict[Literal[settings.CHOICES_BY_URL_KEYS], str] = []
     choices_order: Literal[settings.CHOICE_ORDER_VALUES] = "none"
     choices_enable_if: str = ""
@@ -277,7 +277,7 @@ class TagBoxQuestion(DropdownQuestion):
     ]
 
 
-class JQueryUIDatePicker(TextQuestion):
+class JQueryUIDatePickerQuestion(TextQuestion):
     kind: str = "datepicker"
     date_format: str = "mm/dd/yy"
     config: str = ""
@@ -292,7 +292,7 @@ class JQueryUIDatePicker(TextQuestion):
     ]
 
 
-class BootstrapDatePicker(TextQuestion):
+class BootstrapDatePickerQuestion(TextQuestion):
     kind: str = "bootstrapdatepicker"
     date_format: str = "mm/dd/yy"
     start_date: str = ""

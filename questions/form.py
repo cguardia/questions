@@ -52,8 +52,8 @@ class Form(object):
         self._extra_js = []
         self._extra_css = []
         default_page = Page(name="default")
-        pages = {"default": default_page}
         survey = Survey(**self.params)
+        survey.pages.append(default_page)
         self._add_elements(survey, self, top_level=True)
         return survey
 
@@ -90,7 +90,10 @@ class Form(object):
                         for css in element.extra_css:
                             if css not in extra_css and css not in self._extra_css and css not in self.required_css:
                                 extra_css.append(css)
-                    container = getattr(survey, container_name)
+                    if top_level:
+                        container = survey.pages[0].questions
+                    else:
+                        container = getattr(survey, container_name)
                     container.append(element)
         if extra_js != []:
             survey_widgets = f"{self.resource_url}/surveyjs-widgets.js"
