@@ -37,8 +37,8 @@ benefits:
 * Complex forms can be defined easily using class composition.
 * Easy multi-page forms, with no state-keeping headaches.
 * Minimal code for simple apps. If you just need a form or two, you are set.
-* Zero Javascript code option. If you can use a CDN, no need to even touch the
-  javascript.
+* Zero Javascript code option. If you can use a CDN, no need to install or
+  download any javascript.
 * Out of the box integration with popular third party widgets, like select2_
   and ckeditor_.
 * Supports the creation of tests and quizzes, by defining "correct" answers to

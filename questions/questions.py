@@ -514,7 +514,7 @@ class Survey(Base):
     first_page_is_started: bool = False
     focus_first_question_automatic: bool = True
     focus_on_first_error: bool = True
-    go_next_page_automatic: bool = True
+    go_next_page_automatic: bool = False
     loading_html: str = ""
     locale: Literal[settings.LOCALES] = ""
     logo: HttpUrl = ""
