@@ -1,2 +1,2 @@
-pydantic
+pydantic==1.6.1
 typing-extensions;python_version<"3.8"
