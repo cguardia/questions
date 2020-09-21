@@ -2,7 +2,7 @@ from typing import Type
 
 try:
     from typing import Literal
-except ImportError:
+except ImportError:  # pragma: NO COVER
     from typing_extensions import Literal
 
 from .questions import Page
@@ -20,9 +20,17 @@ from .templates import get_form_page
 from .templates import get_platform_js_resources
 from .templates import get_survey_js
 from .templates import get_theme_css_resources
+from .validators import call_validator
 
 
 class Form(object):
+    """
+    This is the base class used for creating user-defined forms. In addition to
+    setting up the form configuration and performing validation, it generates
+    the SurveyJS form JSON and keeps track of the required Javascript and CSS
+    resources.
+    """
+
     def __init__(
         self,
         name: str = "",
@@ -44,6 +52,7 @@ class Form(object):
         self.params = params
         self._extra_js = []
         self._extra_css = []
+        self._form_elements = {}
 
     def __call__(self):
         return self.render_html()
@@ -51,6 +60,7 @@ class Form(object):
     def _construct_survey(self):
         self._extra_js = []
         self._extra_css = []
+        self._form_elements = {}
         default_page = Page(name="default")
         survey = Survey(**self.params)
         survey.pages.append(default_page)
@@ -82,13 +92,22 @@ class Form(object):
                     )
                     container.append(panel)
                 else:
+                    self._form_elements[element.name] = element
                     if element.extra_js != []:
                         for js in element.extra_js:
-                            if js not in extra_js and js not in self._extra_js and js not in self.required_js:
+                            if (
+                                js not in extra_js
+                                and js not in self._extra_js
+                                and js not in self.required_js
+                            ):
                                 extra_js.append(js)
                     if element.extra_css != []:
                         for css in element.extra_css:
-                            if css not in extra_css and css not in self._extra_css and css not in self.required_css:
+                            if (
+                                css not in extra_css
+                                and css not in self._extra_css
+                                and css not in self.required_css
+                            ):
                                 extra_css.append(css)
                     if top_level:
                         container = survey.pages[0].questions
@@ -132,26 +151,65 @@ class Form(object):
         survey = self._construct_survey()
         return survey.json(by_alias=True, include=INCLUDE_KEYS)
 
-    def render_js(self):
-        return get_survey_js(self.to_json(), self.action, self.theme, self.platform)
+    def render_js(self, form_data=None):
+        return get_survey_js(
+            self.to_json(), form_data, self.action, self.theme, self.platform
+        )
 
-    def render_html(self, title=None):
+    def render_html(self, title=None, form_data=None):
         if title is None:
             title = self.params.get("title", self.name)
-        return get_form_page(title, self.platform, self.render_js(), self.js, self.css)
+        if form_data is None:
+            form_data = {}
+        survey_js = self.render_js(form_data=form_data)
+        return get_form_page(title, self.platform, survey_js, self.js, self.css)
+
+    def validate(self, form_data):
+        """
+        Server side validation mimics what client side validation should do. This
+        means that any validation errors here are due to form data being sent from
+        outside the SurveyJS form, possibly by directly posting the data to the form.
+        Questions keeps track of the errors, even though the UI will show them anyway.
+        Validation returns False if at least one validator doesn't pass.
+        """
+        validated = True
+        errors = []
+        self._construct_survey()
+        for name, element in self._form_elements.items():
+            value = form_data.get(name)
+            if value is None and element.is_required:
+                errors.append({"question": name, "message": "An answer is required"})
+                validated = False
+            for validator_data in element.validators:
+                if not call_validator(validator_data, value, form_data):
+                    errors.append(
+                        {"question": name, "message": validator_data["message"]}
+                    )
+                    validated = False
+        form_data["__errors__"] = errors
+        return validated
 
 
 class FormPage(object):
+    """
+    Represents an individual page from a multi-page form.
+    """
+
     def __init__(self, form: Type[Form], name: str = "", **params):
         self.form = form()
         if name == "":
-            name = self.__class__.__name__
+            name = self.form.name
         self.name = name
         self.dynamic = False
         self.params = params
 
 
 class FormPanel(object):
+    """
+    A panel is a set of fields that go together. It can be used for visual
+    separation, or as a dinamically added group of fields for complex questions.
+    """
+
     def __init__(
         self,
         form: Type[Form],
@@ -161,7 +219,7 @@ class FormPanel(object):
     ):
         self.form = form()
         if name == "":
-            name = self.__class__.__name__
+            name = self.form.name
         self.name = name
         self.dynamic = dynamic
         self.params = params

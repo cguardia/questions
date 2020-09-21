@@ -8,7 +8,7 @@ from pydantic import HttpUrl
 
 try:
     from typing import Literal
-except ImportError:
+except ImportError:  # pragma: NO COVER
     from typing_extensions import Literal
 
 from . import settings
@@ -40,10 +40,6 @@ class Base(BaseModel):
         alias_generator = fix_name
 
 
-class Validator(Base):
-    kind: str
-
-
 class Question(Base):
     kind: str
     name: str = ""
@@ -67,7 +63,7 @@ class Question(Base):
     max_width: str = "initial"
     min_width: str = "300px"
     use_display_values_in_title: bool = True
-    validators: List[Validator] = []
+    validators: List[Dict[str, Any]] = []
     extra_js: List[HttpUrl] = []
     extra_css: List[HttpUrl] = []
 
@@ -315,7 +311,7 @@ class BootstrapDatePickerQuestion(TextQuestion):
 
 
 class Select2Question(DropdownQuestion):
-    render_as: "select2"
+    render_as: str = "select2"
     select2_config: str = ""
     extra_js: List[HttpUrl] = [
         "https://unpkg.com/jquery",
@@ -422,6 +418,7 @@ class MicrophoneQuestion(Question):
         "https://www.WebRTC-Experiment.com/RecordRTC.js",
     ]
 
+
 class HtmlBlock(Question):
     kind: str = "html"
     html: str = ""
@@ -499,7 +496,7 @@ class Page(Base):
 
 
 class Survey(Base):
-    title: str
+    title: str = ""
     pages: List[Page] = []
     calculated_values: List[Any] = []
     check_errors_mode: Literal[settings.CHECK_ERRORS_MODES] = "onNextPage"

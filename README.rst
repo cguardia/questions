@@ -30,7 +30,7 @@ benefits:
   Questions makes sure that you get the right files for each version.
 * More than 20 question types, from simple text inputs and dropdowns to
   elaborate widgets like dynamic panels and checkbox matrices.
-* Multiple look and feel options (themes).
+* Multiple look and feel options (themes), including Bootstrap_ CSS support.
 * Full client side validation (plus server side checking, too).
 * Use simple text expressions in question declarations to control which
   questions to show depending on the answers to previous ones.
@@ -45,6 +45,7 @@ benefits:
   the questions, and optionally setting a maximum time to finish.
 
 .. _SurveyJS: https://surveyjs.io
+.. _Bootstrap: https://getbootstrap.com
 .. _select2: https://select2.org/
 .. _ckeditor: https://ckeditor.com/ckeditor-4/
 
@@ -75,7 +76,9 @@ This is a fairly conventional way to define forms, so no surprises here, but
 look at the way the ``input_type`` parameter allows us to use different HTML5
 text input methods. Pay special attention to the last line, where we use the
 ``visible_if`` parameter to only show the Python version question if the
-answer to the ``language`` question is "Python".
+answer to the ``language`` question is "Python". Defining "live" form behavior
+in this way is something that is usually out of scope for server side code,
+but Questions' SurveyJS integration allows us to do it.
 
 
 Full Working Multi-page Flask Application
