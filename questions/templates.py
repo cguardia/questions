@@ -39,7 +39,7 @@ fetch('{}', {{
 {}
 """
 
-PLATFORM_JS= {
+PLATFORM_JS = {
     "jquery": """var survey = new Survey.Model(json);
 survey.data = data;
 $("#questions_form").Survey({
@@ -185,6 +185,7 @@ def get_platform_js_resources(platform, resource_url):
     platform_js.append(survey_js)
     return platform_js
 
+
 def get_theme_css_resources(theme, resource_url):
     if theme == "bootstrap" and resource_url == SURVEY_JS_CDN:
         return [BOOTSTRAP_URL]
@@ -195,12 +196,14 @@ def get_theme_css_resources(theme, resource_url):
         name = "modern"
     return [f"{resource_url}/{name}.css"]
 
+
 def get_survey_js(form_json, form_data, action, theme, platform):
     if form_data is None:
         form_data = {}
     platform_js = PLATFORM_JS[platform]
     data = json.dumps(form_data)
     return SURVEY_JS.format(theme, form_json, data, action, platform_js)
+
 
 def get_form_page(title, platform, js, js_resources, css_resources):
     resources = ""

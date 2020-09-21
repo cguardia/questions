@@ -2,8 +2,6 @@
 
 """Tests for `cli` package."""
 
-import pytest
-
 from click.testing import CliRunner
 
 from questions import cli

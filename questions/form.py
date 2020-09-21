@@ -14,8 +14,6 @@ from .settings import INCLUDE_KEYS
 from .settings import SURVEY_JS_CDN
 from .settings import SURVEY_JS_PLATFORMS
 from .settings import SURVEY_JS_THEMES
-from .templates import SURVEY_JS
-from .templates import SURVEY_HTML
 from .templates import get_form_page
 from .templates import get_platform_js_resources
 from .templates import get_survey_js
