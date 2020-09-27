@@ -40,6 +40,38 @@ class Base(BaseModel):
         alias_generator = fix_name
 
 
+class Validator(Base):
+    kind: str
+    message: str = "Invalid value"
+
+
+class TextValidator(Validator):
+    kind: str = "text"
+    max_length: int = 0
+    min_length: int = 0
+    allow_digits: bool = True
+
+
+class NumericValidator(Validator):
+    kind: str = "numeric"
+    max_value: int = 0
+    min_value: int = 0
+
+
+class EmailValidator(Validator):
+    kind: str = "email"
+
+
+class RegexValidator(Validator):
+    kind: str = "regex"
+    regex: str = ""
+
+
+class ExpressionValidator(Validator):
+    kind: str = "regex"
+    expression: str = ""
+
+
 class Question(Base):
     kind: str
     name: str = ""
@@ -63,7 +95,7 @@ class Question(Base):
     max_width: str = "initial"
     min_width: str = "300px"
     use_display_values_in_title: bool = True
-    validators: List[Dict[str, Any]] = []
+    validators: List[Validator] = []
     extra_js: List[HttpUrl] = []
     extra_css: List[HttpUrl] = []
 

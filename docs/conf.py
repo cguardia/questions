@@ -31,7 +31,12 @@ import questions
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+    'sphinx_autodoc_typehints',
+    'sphinxcontrib.spelling',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -89,7 +94,13 @@ html_theme = 'alabaster'
 # theme further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    "page_width": "1200px",
+    "github_user": "cguardia",
+    "github_repo": "questions",
+    "github_banner": "true",
+    "github_button": "false",
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -159,4 +170,8 @@ texinfo_documents = [
 ]
 
 
+# -- Options for spell checking ----------------------------------------
 
+# File containing list of words known to be spelled correctly, but not in
+# the dictionary.
+spelling_word_list_filename = 'spelling_word_list.txt'

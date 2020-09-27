@@ -16,8 +16,10 @@ from .questions import CheckboxQuestion
 from .questions import CKEditorQuestion
 from .questions import CommentQuestion
 from .questions import DropdownQuestion
+from .questions import EmailValidator
 from .questions import EmotionsRatingQuestion
 from .questions import ExpressionBlock
+from .questions import ExpressionValidator
 from .questions import FileQuestion
 from .questions import HtmlBlock
 from .questions import ImageBlock
@@ -29,13 +31,16 @@ from .questions import MatrixQuestion
 from .questions import MicrophoneQuestion
 from .questions import MultipleTextQuestion
 from .questions import NoUISliderQuestion
+from .questions import NumericValidator
 from .questions import RadioGroupQuestion
 from .questions import RatingQuestion
+from .questions import RegexValidator
 from .questions import Select2Question
 from .questions import SignaturePadQuestion
 from .questions import SortableJSQuestion
 from .questions import TagBoxQuestion
 from .questions import TextQuestion
+from .questions import TextValidator
 
 
 __all__ = [
@@ -47,8 +52,10 @@ __all__ = [
     "CKEditorQuestion",
     "CommentQuestion",
     "DropdownQuestion",
+    "EmailValidator",
     "EmotionsRatingQuestion",
     "ExpressionBlock",
+    "ExpressionValidator",
     "FileQuestion",
     "Form",
     "FormPage",
@@ -63,11 +70,14 @@ __all__ = [
     "MicrophoneQuestion",
     "MultipleTextQuestion",
     "NoUISliderQuestion",
+    "NumericValidator",
     "RadioGroupQuestion",
     "RatingQuestion",
+    "RegexValidator",
     "Select2Question",
     "SignaturePadQuestion",
     "SortableJSQuestion",
     "TagBoxQuestion",
     "TextQuestion",
+    "TextValidator",
 ]

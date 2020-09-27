@@ -42,51 +42,50 @@ fetch('{}', {{
 PLATFORM_JS = {
     "jquery": """var survey = new Survey.Model(json);
 survey.data = data;
-$("#questions_form").Survey({
+$("#{}").Survey({{
     model:survey,
     onComplete:sendDataToServer
-});
+}});
 """,
     "angular": """window.survey = new Survey.Model(json);
 survey
     .onComplete
     .add(sendDataToServer);
 survey.data = data;
-function onAngularComponentInit() {
+function onAngularComponentInit() {{
     Survey
         .SurveyNG
         .render("surveyElement", {model: survey});
-}
+}}
 var QuestionsApp = ng
     .core
-    .Component({selector: 'ng-app', template: '<div id="surveyContainer" class="survey-container contentcontainer codecontainer"><div id="surveyElement"></div></div> '})
-    .Class({
-        constructor: function () {},
-        ngOnInit: function () {
+    .Component({{selector: 'ng-app', template: '<div id="surveyContainer" class="survey-container contentcontainer codecontainer"><div id="surveyElement"></div></div> '}})
+    .Class({{
+        constructor: function () {{}},
+        ngOnInit: function () {{
             onAngularComponentInit();
-        }
-    });
+        }}
+    }});
 document.addEventListener('DOMContentLoaded', function () {
     ng
         .platformBrowserDynamic
         .bootstrap(QuestionsApp);
-});
+}});
 """,
-    "ko": """var survey = new Survey.Model(json, "questions_form");
+    "ko": """var survey = new Survey.Model(json, "{}");
 survey.data = data;
 survey.onComplete.add(sendDataToServer);
 """,
     "react": """window.survey = new Survey.Model(json);
-survey.data = data;
-ReactDOM.render(<Survey.Survey json={json} onComplete={sendDataToServer}/>,
-  document.getElementById("questions_form"));
+ReactDOM.render(<Survey.Survey json={{json}} data={{data}} onComplete={{sendDataToServer}}/>,
+  document.getElementById("{}"));
 """,
     "vue": """var survey = new Survey.Model(json);
 survey.data = data;
 survey
     .onComplete
     .add(sendDataToServer);
-new Vue({ el: '#questions_form', data: { survey: survey } });
+new Vue({{ el: '#{}', data: {{ survey: survey }} }});
 """,
 }
 
@@ -100,7 +99,7 @@ SURVEY_HTML = {
     </head>
     <body>
 
-        <div id="questions_form" style="display:inline-block;width:100%;"></div>
+        <div id="{}" style="display:inline-block;width:100%;"></div>
 
         <script type="text/javascript">{}</script>
 
@@ -116,7 +115,7 @@ SURVEY_HTML = {
     </head>
     <body>
 
-        <ng-app><ng-app>
+        <ng-app id="{}"><ng-app>
 
         <script type="text/javascript">{}</script>
 
@@ -132,7 +131,7 @@ SURVEY_HTML = {
     </head>
     <body>
 
-        <div id="questions_form" style="display:inline-block;width:100%;"></div>
+        <div id="{}" style="display:inline-block;width:100%;"></div>
 
         <script type="text/javascript">{}</script>
 
@@ -148,7 +147,7 @@ SURVEY_HTML = {
     </head>
     <body>
 
-        <div id="questions_form" style="display:inline-block;width:100%;"></div>
+        <div id="{}" style="display:inline-block;width:100%;"></div>
 
         <script type="text/babel">{}</script>
 
@@ -164,7 +163,7 @@ SURVEY_HTML = {
     </head>
     <body>
 
-        <div id="questions_form" style="display:inline-block;width:100%;">
+        <div id="{}" style="display:inline-block;width:100%;">
             <survey :survey='survey' />
         </div>
 
@@ -197,19 +196,19 @@ def get_theme_css_resources(theme, resource_url):
     return [f"{resource_url}/{name}.css"]
 
 
-def get_survey_js(form_json, form_data, action, theme, platform):
+def get_survey_js(form_json, form_data, html_id, action, theme, platform):
     if form_data is None:
         form_data = {}
-    platform_js = PLATFORM_JS[platform]
+    platform_js = PLATFORM_JS[platform].format(html_id)
     data = json.dumps(form_data)
     return SURVEY_JS.format(theme, form_json, data, action, platform_js)
 
 
-def get_form_page(title, platform, js, js_resources, css_resources):
+def get_form_page(title, html_id, platform, js, js_resources, css_resources):
     resources = ""
     platform_html = SURVEY_HTML[platform]
     for resource in js_resources:
         resources += f'<script src="{resource}"></script>\n'
     for resource in css_resources:
         resources += f'<link href="{resource}" type="text/css" rel="stylesheet" />\n'
-    return platform_html.format(title, resources, js)
+    return platform_html.format(title, resources, html_id, js)

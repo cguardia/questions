@@ -4,12 +4,12 @@
 
 from questions import form
 from questions import questions
+from questions import TextValidator
 
 
 def test_initialize():
     test_form = form.Form(name="testing", param1=0)
     assert test_form.name == "testing"
-    assert test_form.method == "POST"
     assert "param1" in test_form.params
 
 
@@ -149,7 +149,6 @@ def test_validate_no_validators():
     test_form = TestForm(name="testing")
     form_data = {}
     assert test_form.validate(form_data) is True
-    assert form_data["__errors__"] == []
 
 
 def test_validate_required_valid():
@@ -159,7 +158,6 @@ def test_validate_required_valid():
     test_form = TestForm(name="testing")
     form_data = {"text1": "hello"}
     assert test_form.validate(form_data) is True
-    assert form_data["__errors__"] == []
 
 
 def test_validate_required_invalid():
@@ -169,11 +167,10 @@ def test_validate_required_invalid():
     test_form = TestForm(name="testing")
     form_data = {}
     assert test_form.validate(form_data) is False
-    assert form_data["__errors__"][0]["question"] == "text1"
 
 
 def test_validate_with_validators_valid():
-    text_validator = {"type": "text", "min_length": 5, "message": "fail"}
+    text_validator = TextValidator(min_length=5)
 
     class TestForm(form.Form):
         text1 = questions.TextQuestion(validators=[text_validator])
@@ -181,16 +178,16 @@ def test_validate_with_validators_valid():
     test_form = TestForm(name="testing")
     form_data = {"text1": "hello is enough"}
     assert test_form.validate(form_data) is True
-    assert form_data["__errors__"] == []
+    assert "__errors__" not in form_data
 
 
-def test_validate_with_validators_invalid():
-    text_validator = {"type": "text", "min_length": 5, "message": "fail"}
+def test_validate_with_validators_invalid_with_set_errors():
+    text_validator = TextValidator(min_length=5)
 
     class TestForm(form.Form):
         text1 = questions.TextQuestion(validators=[text_validator])
 
     test_form = TestForm(name="testing")
     form_data = {"text1": "Bye"}
-    assert test_form.validate(form_data) is False
+    assert test_form.validate(form_data, set_errors=True) is False
     assert form_data["__errors__"][0]["question"] == "text1"

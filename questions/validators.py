@@ -6,10 +6,10 @@ from simpleeval import EvalWithCompoundTypes as Evaluator
 from simpleeval import InvalidExpression
 
 
-def text_validator(validator_data, value, form_data):
-    max_length = int(validator_data.get("max_length", "0"))
-    min_length = int(validator_data.get("min_length", "0"))
-    allow_digits = int(validator_data.get("allow_digits", False))
+def text_validator(validator, value, form_data):
+    max_length = int(validator.max_length)
+    min_length = int(validator.min_length)
+    allow_digits = validator.allow_digits
     result = True
     value = str(value)
     length = len(value)
@@ -22,9 +22,9 @@ def text_validator(validator_data, value, form_data):
     return result
 
 
-def number_validator(validator_data, value, form_data):
-    max_value = float(validator_data.get("max_value", 0))
-    min_value = float(validator_data.get("min_value", 0))
+def numeric_validator(validator, value, form_data):
+    max_value = float(validator.max_value)
+    min_value = float(validator.min_value)
     result = True
     value = float(value)
     if value < min_value or max_value > 0 and value > max_value:
@@ -32,7 +32,7 @@ def number_validator(validator_data, value, form_data):
     return result
 
 
-def email_validator(validator_data, value, form_data):
+def email_validator(validator, value, form_data):
     result = True
     try:
         validate_email(value)
@@ -41,14 +41,14 @@ def email_validator(validator_data, value, form_data):
     return result
 
 
-def regex_validator(validator_data, value, form_data):
-    regex = validator_data["regex"]
+def regex_validator(validator, value, form_data):
+    regex = validator.regex
     regex = re.compile(regex)
     return regex.match(value) is not None
 
 
-def expression_validator(validator_data, value, form_data):
-    expression = validator_data["expression"]
+def expression_validator(validator, value, form_data):
+    expression = validator.expression
     result = True
     if expression:
         expression = expression.replace("{", "").replace("}", "")
@@ -65,13 +65,13 @@ def expression_validator(validator_data, value, form_data):
 
 VALIDATORS = {
     "text": text_validator,
-    "number": number_validator,
+    "numeric": numeric_validator,
     "email": email_validator,
     "regex": regex_validator,
     "expression": expression_validator,
 }
 
 
-def call_validator(validator_data, value, form_data):
-    validator = VALIDATORS[validator_data["type"]]
-    return validator(validator_data, value, form_data)
+def call_validator(validator, value, form_data):
+    validator_method = VALIDATORS[validator.kind]
+    return validator_method(validator, value, form_data)

@@ -27,13 +27,31 @@ class Form(object):
     setting up the form configuration and performing validation, it generates
     the SurveyJS form JSON and keeps track of the required Javascript and CSS
     resources.
+
+    :param name:
+        The name of the form. If empty, the class name is used.
+    :param action:
+        The URL where the form data will be posted. If empty, the
+        same URL for the form is used.
+    :param html_id:
+        The id for the div element that will be used to render the form.
+    :param theme:
+        The name of the base theme for the form. Default value is 'default'.
+    :param platform:
+        The JS platform to use for generating the form. Default value is 'jquery'.
+    :param resource_url:
+        The base URL for the theme resources. If provided,
+        Questions will expect to find all resources under this URL. If
+        empty, the SurveyJS CDN will be used for all resources.
+    :param params:
+        Optional list of parameters to be passed to the SurveyJS form object.
     """
 
     def __init__(
         self,
         name: str = "",
-        method: Literal[("GET", "POST")] = "POST",
         action: str = "",
+        html_id: str = "questions_form",
         theme: Literal[SURVEY_JS_THEMES] = "default",
         platform: Literal[SURVEY_JS_PLATFORMS] = "jquery",
         resource_url: str = SURVEY_JS_CDN,
@@ -42,9 +60,9 @@ class Form(object):
         if name == "":
             name = self.__class__.__name__
         self.name = name
-        self.theme = theme
-        self.method = method
         self.action = action
+        self.html_id = html_id
+        self.theme = theme
         self.platform = platform
         self.resource_url = resource_url
         self.params = params
@@ -52,8 +70,8 @@ class Form(object):
         self._extra_css = []
         self._form_elements = {}
 
-    def __call__(self):
-        return self.render_html()
+    def __call__(self, form_data=None):
+        return self.render_html(form_data=form_data)
 
     def _construct_survey(self):
         self._extra_js = []
@@ -121,54 +139,114 @@ class Form(object):
 
     @property
     def extra_js(self):
+        """
+        Any extra JS resources required by the form's question types.
+        """
         self._construct_survey()
         return self._extra_js
 
     @property
     def extra_css(self):
+        """
+        Any extra CSS resources required by the form's question types.
+        """
         self._construct_survey()
         return self._extra_css
 
     @property
     def required_js(self):
+        """
+        Required JS resources needed to run SurveyJS on chosen platform.
+        """
         return get_platform_js_resources(self.platform, self.resource_url)
 
     @property
     def required_css(self):
+        """
+        Required CSS resources needed to run SurveyJS on chosen platform.
+        """
         return get_theme_css_resources(self.theme, self.resource_url)
 
     @property
     def js(self):
+        """
+        Combined JS resources for this form.
+        """
         return self.required_js + self.extra_js
 
     @property
     def css(self):
+        """
+        Combined CSS resources for this form.
+        """
         return self.required_css + self.extra_css
 
     def to_json(self):
+        """
+        Convert the form to JSON, in the SurveyJS format.
+
+        :Returns:
+            JSON object with the form definition.
+        """
         survey = self._construct_survey()
         return survey.json(by_alias=True, include=INCLUDE_KEYS)
 
     def render_js(self, form_data=None):
+        """
+        Generate the SurveyJS initialization code for the chosen platform.
+
+        :param form_data: answers to show on the form for each
+            question (for edit forms).
+
+        :Returns:
+            String with the generated javascript.
+        """
         return get_survey_js(
-            self.to_json(), form_data, self.action, self.theme, self.platform
+            self.to_json(),
+            form_data,
+            self.html_id,
+            self.action,
+            self.theme,
+            self.platform,
         )
 
     def render_html(self, title=None, form_data=None):
+        """
+        Render a full HTML page showing this form.
+
+        :param title:
+            The form title.
+        :param form_data:
+            answers to show on the form for each question (for edit forms).
+
+        :Returns:
+            String with the generated HTML.
+        """
         if title is None:
             title = self.params.get("title", self.name)
         if form_data is None:
             form_data = {}
         survey_js = self.render_js(form_data=form_data)
-        return get_form_page(title, self.platform, survey_js, self.js, self.css)
+        return get_form_page(
+            title, self.html_id, self.platform, survey_js, self.js, self.css
+        )
 
-    def validate(self, form_data):
+    def validate(self, form_data, set_errors=False):
         """
         Server side validation mimics what client side validation should do. This
         means that any validation errors here are due to form data being sent from
         outside the SurveyJS form, possibly by directly posting the data to the form.
         Questions keeps track of the errors, even though the UI will show them anyway.
         Validation returns False if at least one validator doesn't pass.
+
+        :param form_data:
+            A dictionary-like object with the form data to be validated.
+        :param set_errors:
+            set to :data:`True` to add an `__errors__` key to the
+            form data dictionary, containing the validation errors.
+
+        :Returns:
+            :data:`True` if the validation passes, :data:`False` otherwise.
         """
         validated = True
         errors = []
@@ -178,19 +256,26 @@ class Form(object):
             if value is None and element.is_required:
                 errors.append({"question": name, "message": "An answer is required"})
                 validated = False
-            for validator_data in element.validators:
-                if not call_validator(validator_data, value, form_data):
-                    errors.append(
-                        {"question": name, "message": validator_data["message"]}
-                    )
+            for validator in element.validators:
+                if not call_validator(validator, value, form_data):
+                    errors.append({"question": name, "message": validator.message})
                     validated = False
-        form_data["__errors__"] = errors
+        if set_errors:
+            form_data["__errors__"] = errors
         return validated
 
 
 class FormPage(object):
     """
     Represents an individual page from a multi-page form.
+
+    :param form:
+        A subclass of questions.Form (not an instance). The form
+        to be shown in its own page.
+    :param name:
+        The name of the form.
+    :param params:
+        Optional list of parameters to be passed to the SurveyJS page object.
     """
 
     def __init__(self, form: Type[Form], name: str = "", **params):
@@ -205,7 +290,18 @@ class FormPage(object):
 class FormPanel(object):
     """
     A panel is a set of fields that go together. It can be used for visual
-    separation, or as a dinamically added group of fields for complex questions.
+    separation, or as a dynamically added group of fields for complex questions.
+
+    :param form:
+        A subclass of questions.Form (not an instance). The form
+        to be shown in its own page.
+    :param name:
+        The name of the form.
+    :param dynamic:
+        Set to :data:`True` if the panel will be used as a template for adding
+         or removing groups of questions.
+    :param params:
+        Optional list of parameters to be passed to the SurveyJS panel object.
     """
 
     def __init__(
