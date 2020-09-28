@@ -132,7 +132,7 @@ be defined, and it is then passed in to the panel constructor::
     class ProfileForm(Form):
         receive_newsletter = BooleanQuestion(
             title="Do you wish to receive our newsletter?",
-            is_required=True,
+            required=True,
         )
         newsletter_panel = FormPanel(
             PreferencesForm,
@@ -200,7 +200,7 @@ and forth between the pages. The final page will show a `complete` button::
 
     class PageOne(Form):
         name = TextQuestion()
-        email = TextQuestion(input_type="email", is_required="True")
+        email = TextQuestion(input_type="email", required="True")
 
 
     class PageTwo(Form):

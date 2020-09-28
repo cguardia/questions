@@ -1,3 +1,5 @@
+"""Defines constants to be used throughout the code."""
+
 SURVEY_JS_VERSION = "1.8.2"
 
 SURVEY_JS_CDN = f"https://surveyjs.azureedge.net/{SURVEY_JS_VERSION}"
@@ -123,7 +125,6 @@ INCLUDE_KEYS = {
                     "input_format": ...,
                     "input_mask": ...,
                     "input_type": ...,
-                    "is_required": ...,
                     "items": ...,
                     "item_size": ...,
                     "key_duplication_error": ...,
@@ -180,6 +181,7 @@ INCLUDE_KEYS = {
                     "remove_row_text": ...,
                     "render_as": ...,
                     "render_mode": ...,
+                    "required": ...,
                     "required_error_text": ...,
                     "required_if": ...,
                     "rows": ...,

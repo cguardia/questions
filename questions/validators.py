@@ -1,12 +1,28 @@
 import re
+from typing import Any
+from typing import Dict
 
 from email_validator import EmailNotValidError
 from email_validator import validate_email
 from simpleeval import EvalWithCompoundTypes as Evaluator
 from simpleeval import InvalidExpression
 
+from .questions import Validator
 
-def text_validator(validator, value, form_data):
+
+def text_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+    """Validate length of a text value, and whether digits are allowed.
+
+    :param validator:
+        The validator instance for the current question.
+    :param value:
+        The value to be validated.
+    :param form_data:
+        The dictionary containing from data entered for current form.
+
+    :Returns:
+        If validation passes, :data:`True`, else :data:`False`.
+    """
     max_length = int(validator.max_length)
     min_length = int(validator.min_length)
     allow_digits = validator.allow_digits
@@ -22,7 +38,19 @@ def text_validator(validator, value, form_data):
     return result
 
 
-def numeric_validator(validator, value, form_data):
+def numeric_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+    """Validate if number value is within set limits.
+
+    :param validator:
+        The validator instance for the current question.
+    :param value:
+        The value to be validated.
+    :param form_data:
+        The dictionary containing from data entered for current form.
+
+    :Returns:
+        If validation passes, :data:`True`, else :data:`False`.
+    """
     max_value = float(validator.max_value)
     min_value = float(validator.min_value)
     result = True
@@ -32,7 +60,19 @@ def numeric_validator(validator, value, form_data):
     return result
 
 
-def email_validator(validator, value, form_data):
+def email_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+    """Validate if value is a valid email address.
+
+    :param validator:
+        The validator instance for the current question.
+    :param value:
+        The value to be validated.
+    :param form_data:
+        The dictionary containing from data entered for current form.
+
+    :Returns:
+        If validation passes, :data:`True`, else :data:`False`.
+    """
     result = True
     try:
         validate_email(value)
@@ -41,13 +81,37 @@ def email_validator(validator, value, form_data):
     return result
 
 
-def regex_validator(validator, value, form_data):
+def regex_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+    """Validate if value matches regular expression.
+
+    :param validator:
+        The validator instance for the current question.
+    :param value:
+        The value to be validated.
+    :param form_data:
+        The dictionary containing from data entered for current form.
+
+    :Returns:
+        If validation passes, :data:`True`, else :data:`False`.
+    """
     regex = validator.regex
     regex = re.compile(regex)
     return regex.match(value) is not None
 
 
-def expression_validator(validator, value, form_data):
+def expression_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+    """Validate if expression associated with value is true.
+
+    :param validator:
+        The validator instance for the current question.
+    :param value:
+        The value to be validated.
+    :param form_data:
+        The dictionary containing from data entered for current form.
+
+    :Returns:
+        If validation passes, :data:`True`, else :data:`False`.
+    """
     expression = validator.expression
     result = True
     if expression:
@@ -72,6 +136,18 @@ VALIDATORS = {
 }
 
 
-def call_validator(validator, value, form_data):
+def call_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+    """Call correct validation method depending on validator type.
+
+    :param validator:
+        The validator instance for the current question.
+    :param value:
+        The value to be validated.
+    :param form_data:
+        The dictionary containing from data entered for current form.
+
+    :Returns:
+        If validation passes, :data:`True`, else :data:`False`.
+    """
     validator_method = VALIDATORS[validator.kind]
     return validator_method(validator, value, form_data)

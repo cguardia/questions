@@ -1,3 +1,5 @@
+from typing import Any
+from typing import Dict
 from typing import Type
 
 try:
@@ -191,7 +193,10 @@ class Form(object):
         survey = self._construct_survey()
         return survey.json(by_alias=True, include=INCLUDE_KEYS)
 
-    def render_js(self, form_data=None):
+    def render_js(
+            self,
+            form_data: Dict[str, Any]=None
+        ):
         """
         Generate the SurveyJS initialization code for the chosen platform.
 
@@ -210,7 +215,11 @@ class Form(object):
             self.platform,
         )
 
-    def render_html(self, title=None, form_data=None):
+    def render_html(
+            self,
+            title: str=None,
+            form_data: Dict[str, Any]=None
+        ):
         """
         Render a full HTML page showing this form.
 
@@ -231,7 +240,11 @@ class Form(object):
             title, self.html_id, self.platform, survey_js, self.js, self.css
         )
 
-    def validate(self, form_data, set_errors=False):
+    def validate(
+            self,
+            form_data: Dict[str, Any],
+            set_errors: bool=False
+        ):
         """
         Server side validation mimics what client side validation should do. This
         means that any validation errors here are due to form data being sent from
@@ -253,7 +266,7 @@ class Form(object):
         self._construct_survey()
         for name, element in self._form_elements.items():
             value = form_data.get(name)
-            if value is None and element.is_required:
+            if value is None and element.required:
                 errors.append({"question": name, "message": "An answer is required"})
                 validated = False
             for validator in element.validators:
@@ -278,7 +291,12 @@ class FormPage(object):
         Optional list of parameters to be passed to the SurveyJS page object.
     """
 
-    def __init__(self, form: Type[Form], name: str = "", **params):
+    def __init__(
+            self,
+            form: Type[Form],
+            name: str = "",
+            **params
+    ):
         self.form = form()
         if name == "":
             name = self.form.name

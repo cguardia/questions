@@ -63,7 +63,7 @@ example::
 
     class SimpleForm(Form):
         name = TextQuestion()
-        email = TextQuestion(input_type="email", is_required="True")
+        email = TextQuestion(input_type="email", required="True")
         favorite_number = TextQuestion(title="What is your favorite number?",
             input_type="number")
         language = RadioGroupQuestion(title="Favorite Language",
@@ -98,7 +98,7 @@ following is a complete application using the popular Flask_ web framework::
 
     class PageOne(Form):
         name = TextQuestion()
-        email = TextQuestion(input_type="email", is_required="True")
+        email = TextQuestion(input_type="email", required="True")
 
 
     class PageTwo(Form):

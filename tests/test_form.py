@@ -153,7 +153,7 @@ def test_validate_no_validators():
 
 def test_validate_required_valid():
     class TestForm(form.Form):
-        text1 = questions.TextQuestion(is_required=True)
+        text1 = questions.TextQuestion(required=True)
 
     test_form = TestForm(name="testing")
     form_data = {"text1": "hello"}
@@ -162,7 +162,7 @@ def test_validate_required_valid():
 
 def test_validate_required_invalid():
     class TestForm(form.Form):
-        text1 = questions.TextQuestion(is_required=True)
+        text1 = questions.TextQuestion(required=True)
 
     test_form = TestForm(name="testing")
     form_data = {}

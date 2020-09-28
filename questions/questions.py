@@ -14,7 +14,9 @@ except ImportError:  # pragma: NO COVER
 from . import settings
 
 
-class Base(BaseModel):
+class _Base(BaseModel):
+    """Base class for questions classes. Main responsibility is renaming
+    Python parameter names to Javascript's camelCase convention."""
     class Config:
 
         fields = {
@@ -23,6 +25,7 @@ class Base(BaseModel):
             "expression_format": "format",
             "max_value": "max",
             "min_value": "min",
+            "required": "isRequired",
         }
 
         @classmethod
@@ -40,12 +43,14 @@ class Base(BaseModel):
         alias_generator = fix_name
 
 
-class Validator(Base):
+class Validator(_Base):
+    """Base class for all validators."""
     kind: str
     message: str = "Invalid value"
 
 
 class TextValidator(Validator):
+    """Validator for text input."""
     kind: str = "text"
     max_length: int = 0
     min_length: int = 0
@@ -53,31 +58,39 @@ class TextValidator(Validator):
 
 
 class NumericValidator(Validator):
+    """Validator for numeric input."""
     kind: str = "numeric"
     max_value: int = 0
     min_value: int = 0
 
 
 class EmailValidator(Validator):
+    """Checks if a value is a valid email address."""
     kind: str = "email"
 
 
 class RegexValidator(Validator):
+    """Checks if a value matches a regular expression."""
     kind: str = "regex"
     regex: str = ""
 
 
 class ExpressionValidator(Validator):
+    """Checks if a question's answer matches a set of conditions."""
     kind: str = "regex"
     expression: str = ""
 
 
-class Question(Base):
+class Question(_Base):
+    """
+    Base question class. All questions share these properties, and all can be
+    set by passing them as parameters when instantiating the question.
+    """
     kind: str
     name: str = ""
     title: str = ""
     description: str = ""
-    is_required: bool = False
+    required: bool = False
     visible: bool = True
     default_value: str = ""
     correct_answer: str = ""
@@ -101,6 +114,10 @@ class Question(Base):
 
 
 class TextQuestion(Question):
+    """
+    A question that uses a text input box. It can handle all HTML5 text input
+    types.
+    """
     kind: str = "text"
     place_holder: str = ""
     input_type: Literal[settings.TEXT_INPUT_TYPES] = "text"
@@ -110,7 +127,7 @@ class TextQuestion(Question):
     size: int = 0
     step: str = ""
     text_update_mode: Literal[settings.TEXT_UPDATE_MODES] = "default"
-    input_mask: str = "none"
+    input_mask: str = ""
     input_format: str = ""
     prefix: str = ""
     auto_unmask: bool = True
@@ -121,6 +138,11 @@ class TextQuestion(Question):
 
 
 class ChoicesQuestion(Question):
+    """
+    Base class for questions that let the user select one or more options
+    from a list of choices. The choices can either be set at question
+    instantiation time, or come from a JSON web service at run time.
+    """
     kind: str = ""
     col_count: int = 4
     choices: List[Union[str, Dict[str, Union[str, HttpUrl]]]] = []
@@ -137,11 +159,17 @@ class ChoicesQuestion(Question):
 
 
 class RadioGroupQuestion(ChoicesQuestion):
+    """
+    Select one option from a group of radio buttons.
+    """
     kind: str = "radiogroup"
     show_clear_button: bool = False
 
 
 class DropdownQuestion(ChoicesQuestion):
+    """
+    Select one option from a dropdown menu.
+    """
     kind: str = "dropdown"
     choices_max: int = 0
     choices_min: int = 0
@@ -151,6 +179,9 @@ class DropdownQuestion(ChoicesQuestion):
 
 
 class CheckboxQuestion(ChoicesQuestion):
+    """
+    Select one or more options from a group of check boxes.
+    """
     kind: str = "checkbox"
     has_none: bool = False
     has_select_all: bool = False
@@ -158,6 +189,9 @@ class CheckboxQuestion(ChoicesQuestion):
 
 
 class ImagePickerQuestion(ChoicesQuestion):
+    """
+    Display a group of images and let the user pick one or more.
+    """
     kind: str = "imagepicker"
     content_mode: Literal[settings.IMAGE_CONTENT_MODE_VALUES] = "image"
     show_label: bool = False
@@ -172,6 +206,10 @@ class ImagePickerQuestion(ChoicesQuestion):
 
 
 class BooleanQuestion(Question):
+    """
+    Get the answer for any two-possibility question. Usually true/false, yes/
+    no questions.
+    """
     kind: str = "boolean"
     label_true: str = ""
     label_false: str = ""
@@ -181,6 +219,10 @@ class BooleanQuestion(Question):
 
 
 class SignaturePadQuestion(Question):
+    """
+    Allow the user to "sign" something by drawing their signature. Can be used
+    to capture user drawings for other types of questions.
+    """
     kind: str = "signaturepad"
     height: int = 200
     width: int = 300
@@ -188,6 +230,10 @@ class SignaturePadQuestion(Question):
 
 
 class MultipleTextQuestion(Question):
+    """
+    A text question with multiple related parts. Displays a text box for each
+    part.
+    """
     kind: str = "multipletext"
     col_count: int = 2
     items: List[Dict[str, str]] = []
@@ -195,6 +241,9 @@ class MultipleTextQuestion(Question):
 
 
 class CommentQuestion(Question):
+    """
+    A question that uses a text area to get a multi-line text answer.
+    """
     kind: str = "comment"
     rows: int = 3
     cols: int = 50
@@ -204,6 +253,9 @@ class CommentQuestion(Question):
 
 
 class RatingQuestion(Question):
+    """
+    A question that lets the user select a number on a fixed scale.
+    """
     kind: str = "rating"
     min_rate_description: str = ""
     max_rate_description: str = ""
@@ -214,6 +266,9 @@ class RatingQuestion(Question):
 
 
 class FileQuestion(Question):
+    """
+    A question for uploading one or more files.
+    """
     kind: str = "file"
     show_preview: bool = True
     allow_multiple: bool = False
@@ -228,6 +283,10 @@ class FileQuestion(Question):
 
 
 class MatrixQuestion(Question):
+    """
+    A question that displays rows of radio buttons and allows the user to
+    select a value from one of several columns for each row.
+    """
     kind: str = "matrix"
     columns: List[Dict[Union[int, str], str]]
     rows: List[Dict[Union[int, str], str]]
@@ -240,6 +299,10 @@ class MatrixQuestion(Question):
 
 
 class MatrixDropdownQuestion(Question):
+    """
+    A matrix question that can include other types of input controls, like
+    dropdowns and text boxes.
+    """
     kind: str = "matrixdropdown"
     columns: List[Dict[Union[int, str], Any]]
     rows: List[Dict[Union[int, str], str]]
@@ -261,6 +324,10 @@ class MatrixDropdownQuestion(Question):
 
 
 class MatrixDynamicQuestion(Question):
+    """
+    A matrix dropdown question that allows the user to add or remove new rows
+    from their answer.
+    """
     kind: str = "matrixdynamic"
     columns: List[Dict[Union[int, str], Any]]
     rows: List[Dict[Union[int, str], str]]
@@ -294,6 +361,9 @@ class MatrixDynamicQuestion(Question):
 
 
 class TagBoxQuestion(DropdownQuestion):
+    """
+    A question that uses the Select2 tag box widget.
+    """
     kind: str = "tagbox"
     select2_config: str = ""
     extra_js: List[HttpUrl] = [
@@ -306,6 +376,9 @@ class TagBoxQuestion(DropdownQuestion):
 
 
 class JQueryUIDatePickerQuestion(TextQuestion):
+    """
+    A question that uses the JQueryUI date picker.
+    """
     kind: str = "datepicker"
     date_format: str = "mm/dd/yy"
     config: str = ""
@@ -321,6 +394,9 @@ class JQueryUIDatePickerQuestion(TextQuestion):
 
 
 class BootstrapDatePickerQuestion(TextQuestion):
+    """
+    A question that uses the bootstrap date picker.
+    """
     kind: str = "bootstrapdatepicker"
     date_format: str = "mm/dd/yy"
     start_date: str = ""
@@ -343,6 +419,9 @@ class BootstrapDatePickerQuestion(TextQuestion):
 
 
 class Select2Question(DropdownQuestion):
+    """
+    A question that uses the Select2 dropdown widget.
+    """
     render_as: str = "select2"
     select2_config: str = ""
     extra_js: List[HttpUrl] = [
@@ -355,6 +434,9 @@ class Select2Question(DropdownQuestion):
 
 
 class BarRatingQuestion(DropdownQuestion):
+    """
+    A question that uses the JQuery bar rating widget.
+    """
     kind: str = "barrating"
     rating_theme: Literal[settings.BAR_RATING_THEMES] = "fontawesome-stars"
     show_values: bool = False
@@ -376,6 +458,9 @@ class BarRatingQuestion(DropdownQuestion):
 
 
 class SortableJSQuestion(CheckboxQuestion):
+    """
+    A question that uses the JQuery sortable widget.
+    """
     kind: str = "sortablelist"
     empty_text: str = ""
     max_answers_count: int = -1
@@ -386,6 +471,9 @@ class SortableJSQuestion(CheckboxQuestion):
 
 
 class NoUISliderQuestion(Question):
+    """
+    A question that uses the NoUISlider JQuery widget.
+    """
     kind: str = "nouislider"
     step: int = 1
     range_min: int = 0
@@ -408,6 +496,9 @@ class NoUISliderQuestion(Question):
 
 
 class CKEditorQuestion(Question):
+    """
+    A question that uses the CKEditor JQuery widget.
+    """
     kind: str = "editor"
     height: str = "300px"
     extra_js: List[HttpUrl] = [
@@ -417,6 +508,9 @@ class CKEditorQuestion(Question):
 
 
 class BootstrapSliderQuestion(Question):
+    """
+    A question that uses the bootstrap slider widget.
+    """
     kind: str = "bootstrpslider"
     step: int = 1
     range_min: int = 0
@@ -432,6 +526,9 @@ class BootstrapSliderQuestion(Question):
 
 
 class EmotionsRatingQuestion(DropdownQuestion):
+    """
+    A question that uses the emotion ratings JQuery widget.
+    """
     kind: str = "emotionsratings"
     emotions: List[str] = ["angry", "disappointed", "meh", "happy", "inLove"]
     emotion_size: int = 30
@@ -445,6 +542,9 @@ class EmotionsRatingQuestion(DropdownQuestion):
 
 
 class MicrophoneQuestion(Question):
+    """
+    A question that uses the RecordRTC sound recording widgets.
+    """
     kind: str = "microphone"
     extra_js: List[HttpUrl] = [
         "https://www.WebRTC-Experiment.com/RecordRTC.js",
@@ -452,11 +552,17 @@ class MicrophoneQuestion(Question):
 
 
 class HtmlBlock(Question):
+    """
+    An HTML block that can be embedded in a form.
+    """
     kind: str = "html"
     html: str = ""
 
 
 class ImageBlock(Question):
+    """
+    An block for inserting an image in a form.
+    """
     kind: str = "image"
     image_height: int = 200
     image_width: int = 300
@@ -466,6 +572,9 @@ class ImageBlock(Question):
 
 
 class ExpressionBlock(Question):
+    """
+    A block that inserts the result of an expression in a form.
+    """
     kind: str = "expression"
     expression: str
     currency: str = "USD"
@@ -477,6 +586,10 @@ class ExpressionBlock(Question):
 
 
 class PanelBlock(Question):
+    """
+    A form panel is a group of questions that go together. A form can contain
+    any number of panels, even nested.
+    """
     kind: str = "panel"
     inner_indent: int = 1
     elements: List[Question] = []
@@ -488,6 +601,10 @@ class PanelBlock(Question):
 
 
 class PanelDynamicBlock(Question):
+    """
+    Dynamic blocks allow users to manually add or remove panels. A form can contain
+    any number of dynamic panels, even nested.
+    """
     kind: str = "paneldynamic"
     inner_indent: int = 1
     render_mode: Literal[settings.PANEL_RENDER_MODES] = "list"
@@ -516,7 +633,11 @@ class PanelDynamicBlock(Question):
     template_title_location: Literal[settings.TITLE_LOCATIONS] = "default"
 
 
-class Page(Base):
+class Page(_Base):
+    """
+    A group of questions presented as an individual form page. A form can contain
+    any number of pages.
+    """
     name: str = ""
     title: str = ""
     questions: List[Question] = []
@@ -527,7 +648,11 @@ class Page(Base):
     questions_order: Literal[settings.QUESTION_ORDER_VALUES] = "default"
 
 
-class Survey(Base):
+class Survey(_Base):
+    """
+    The main SurveyJS form container. Questions forms generate a survey
+    rendering the questions contained in a form.
+    """
     title: str = ""
     pages: List[Page] = []
     calculated_values: List[Any] = []

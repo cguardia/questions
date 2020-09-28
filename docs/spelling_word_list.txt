@@ -5,11 +5,13 @@ docstring
 docstrings
 dropdown
 dropdowns
+instantiation
 javascript
 JQuery
 jquery
 ko
 repo
+sortable
 submodules
 validator
 validators
