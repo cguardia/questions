@@ -1,0 +1,9 @@
+dl.py.class {
+    margin-top: 45px;
+    padding-top: 18px;
+    border-top: 3px outset;
+}
+
+dl.py.method, dl.py.function {
+    margin-top: 35px;
+}
