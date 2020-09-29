@@ -9,7 +9,7 @@ SURVEY_JS_WIDGETS = "surveyjs-widgets.js"
 SURVEY_JS_PLATFORMS = (
     "angular",
     "jquery",
-    "ko",
+    "knockout",
     "react",
     "vue",
 )
@@ -28,7 +28,7 @@ SUGGESTED_JS_BY_PLATFORM = {
     "jquery": [
         "https://unpkg.com/jquery",
     ],
-    "ko": [
+    "knockout": [
         "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js",
     ],
     "react": [

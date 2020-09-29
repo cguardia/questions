@@ -14,6 +14,7 @@ requirements = ['Click>=7.0',
                 'email_validator',
                 'Jinja2',
                 'pydantic',
+                'requests',
                 'simpleeval',
                 ]
 
@@ -41,7 +42,8 @@ setup(
     description="Questions is a form library that uses the power of SurveyJS for the UI.",
     entry_points={
         'console_scripts': [
-            'questions=questions.cli:main',
+            'download_surveyjs=questions.cli:download_surveyjs',
+            'list_resources=questions.cli:list_resources',
         ],
     },
     install_requires=requirements,

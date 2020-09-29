@@ -716,3 +716,32 @@ class Survey(_Base):
     survey_show_data_saving: bool = True
     text_update_mode: Literal[settings.TEXT_UPDATE_MODES] = "onBlur"
     triggers: List[Any] = []
+
+
+QUESTION_TYPES = [
+    BarRatingQuestion,
+    BooleanQuestion,
+    BootstrapDatePickerQuestion,
+    BootstrapSliderQuestion,
+    CheckboxQuestion,
+    CKEditorQuestion,
+    CommentQuestion,
+    DropdownQuestion,
+    EmotionsRatingQuestion,
+    FileQuestion,
+    ImagePickerQuestion,
+    JQueryUIDatePickerQuestion,
+    MatrixDropdownQuestion,
+    MatrixDynamicQuestion,
+    MatrixQuestion,
+    MicrophoneQuestion,
+    MultipleTextQuestion,
+    NoUISliderQuestion,
+    RadioGroupQuestion,
+    RatingQuestion,
+    Select2Question,
+    SignaturePadQuestion,
+    SortableJSQuestion,
+    TagBoxQuestion,
+    TextQuestion,
+]
