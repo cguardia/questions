@@ -29,30 +29,56 @@ def test_get_theme_css_resources():
 
 def test_get_survey_js():
     survey_js = templates.get_survey_js(
-        "FORM_JSON", "FORM_DATA", "id", "http://testing", "default", "jquery"
+        form_json="FORM_JSON",
+        form_data="FORM_DATA",
+        html_id="id",
+        action="http://testing",
+        theme="default",
+        platform="jquery",
     )
     assert "FORM_JSON" in survey_js
     assert "FORM_DATA" in survey_js
     assert "http://testing" in survey_js
     assert "default" in survey_js
-    assert templates.PLATFORM_JS["jquery"].format("id") in survey_js
 
 
 def test_get_survey_js_form_data_is_none():
     survey_js = templates.get_survey_js(
-        "FORM_JSON", None, "id", "http://testing", "default", "jquery"
+        form_json="FORM_JSON",
+        form_data=None,
+        html_id="id",
+        action="http://testing",
+        theme="default",
+        platform="jquery",
     )
     assert "FORM_JSON" in survey_js
     assert "http://testing" in survey_js
     assert "default" in survey_js
-    assert templates.PLATFORM_JS["jquery"].format("id") in survey_js
 
 
 def test_get_form_page():
     html = templates.get_form_page(
-        "Title", "id", "jquery", "GENERATED_JS", ["file.js"], ["file.css"]
+        title="Title",
+        html_id="id",
+        platform="jquery",
+        survey_js="GENERATED_JS",
+        js_resources=["file.js"],
+        css_resources=["file.css"],
     )
     assert "Title" in html
     assert "GENERATED_JS" in html
     assert "file.js" in html
     assert "file.css" in html
+
+
+def test_get_form_page_no_resources():
+    html = templates.get_form_page(
+        title="Title",
+        html_id="id",
+        platform="jquery",
+        survey_js="GENERATED_JS",
+        js_resources=None,
+        css_resources=None,
+    )
+    assert "Title" in html
+    assert "GENERATED_JS" in html

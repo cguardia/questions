@@ -1,0 +1,54 @@
+Survey
+    .StylesManager
+    .applyTheme('{{ theme }}');
+
+var json = {{ json }};
+
+var data = {{ data }};
+
+var sendDataToServer = function(result) {
+
+fetch('{{ action }}', {
+    method: 'post',
+    headers: {
+        'Accept': 'text/html, text/plain, */*',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(result.data)
+})
+.then(function (response) {
+    return response;
+})
+.then(function (result) {
+    console.log('Redirect successful');
+})
+.catch (function (error) {
+    console.log('Request failed', error);
+});
+
+}
+
+window.survey = new Survey.Model(json);
+survey
+    .onComplete
+    .add(sendDataToServer);
+survey.data = data;
+function onAngularComponentInit() {
+    Survey
+        .SurveyNG
+        .render("surveyElement", {model: survey});
+}
+var QuestionsApp = ng
+    .core
+    .Component({{selector: 'ng-app', template: '<div id="surveyContainer" class="survey-container contentcontainer codecontainer"><div id="surveyElement"></div></div> '}})
+    .Class({
+        constructor: function () {},
+        ngOnInit: function () {
+            onAngularComponentInit();
+        }
+    });
+document.addEventListener('DOMContentLoaded', function () {
+    ng
+        .platformBrowserDynamic
+        .bootstrap(QuestionsApp);
+}});

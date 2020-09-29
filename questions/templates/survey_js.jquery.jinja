@@ -1,0 +1,36 @@
+Survey
+    .StylesManager
+    .applyTheme('{{ theme }}');
+
+var json = {{ json }};
+
+var data = {{ data }};
+
+var sendDataToServer = function(result) {
+
+fetch('{{ action }}', {
+    method: 'post',
+    headers: {
+        'Accept': 'text/html, text/plain, */*',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(result.data)
+})
+.then(function (response) {
+    return response;
+})
+.then(function (result) {
+    console.log('Redirect successful');
+})
+.catch (function (error) {
+    console.log('Request failed', error);
+});
+
+}
+
+var survey = new Survey.Model(json);
+survey.data = data;
+$("#{{ html_id }}").Survey({
+    model:survey,
+    onComplete:sendDataToServer
+});

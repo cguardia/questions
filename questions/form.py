@@ -207,12 +207,12 @@ class Form(object):
             String with the generated javascript.
         """
         return get_survey_js(
-            self.to_json(),
-            form_data,
-            self.html_id,
-            self.action,
-            self.theme,
-            self.platform,
+            form_json=self.to_json(),
+            form_data=form_data,
+            html_id=self.html_id,
+            action=self.action,
+            theme=self.theme,
+            platform=self.platform,
         )
 
     def render_html(
@@ -237,7 +237,12 @@ class Form(object):
             form_data = {}
         survey_js = self.render_js(form_data=form_data)
         return get_form_page(
-            title, self.html_id, self.platform, survey_js, self.js, self.css
+            title=title,
+            html_id=self.html_id,
+            platform=self.platform,
+            survey_js=survey_js,
+            js_resources=self.js,
+            css_resources=self.css,
         )
 
     def validate(
