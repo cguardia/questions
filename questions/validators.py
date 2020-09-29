@@ -10,7 +10,7 @@ from simpleeval import InvalidExpression
 from .questions import Validator
 
 
-def text_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+def text_validator(validator: Validator, value: Any, form_data: Dict[str, Any]):
     """Validate length of a text value, and whether digits are allowed.
 
     :param validator:
@@ -38,7 +38,7 @@ def text_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
     return result
 
 
-def numeric_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+def numeric_validator(validator: Validator, value: Any, form_data: Dict[str, Any]):
     """Validate if number value is within set limits.
 
     :param validator:
@@ -60,7 +60,7 @@ def numeric_validator(validator: Validator, value: Any, form_data:Dict[str, Any]
     return result
 
 
-def email_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+def email_validator(validator: Validator, value: Any, form_data: Dict[str, Any]):
     """Validate if value is a valid email address.
 
     :param validator:
@@ -81,7 +81,7 @@ def email_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
     return result
 
 
-def regex_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+def regex_validator(validator: Validator, value: Any, form_data: Dict[str, Any]):
     """Validate if value matches regular expression.
 
     :param validator:
@@ -99,7 +99,7 @@ def regex_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
     return regex.match(value) is not None
 
 
-def expression_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+def expression_validator(validator: Validator, value: Any, form_data: Dict[str, Any]):
     """Validate if expression associated with value is true.
 
     :param validator:
@@ -136,7 +136,7 @@ VALIDATORS = {
 }
 
 
-def call_validator(validator: Validator, value: Any, form_data:Dict[str, Any]):
+def call_validator(validator: Validator, value: Any, form_data: Dict[str, Any]):
     """Call correct validation method depending on validator type.
 
     :param validator:

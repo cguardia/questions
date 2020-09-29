@@ -2,8 +2,6 @@
 
 """Tests for `validators` package."""
 
-from unittest import mock
-
 from questions import validators
 from questions import EmailValidator
 from questions import ExpressionValidator

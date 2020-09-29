@@ -6,7 +6,6 @@ from typing import List
 from jinja2 import Environment
 from jinja2 import PackageLoader
 from jinja2 import select_autoescape
-from jinja2 import Template
 
 from .settings import BOOTSTRAP_URL
 from .settings import SUGGESTED_JS_BY_PLATFORM
@@ -19,20 +18,21 @@ env = Environment(
     autoescape=select_autoescape(["html", "xml"]),
 )
 
+
 def _render_template(
-        kind: str="js",
-        platform: str="jquery",
-        **context_data: Dict,
-    ):
+    kind: str = "js",
+    platform: str = "jquery",
+    **context_data: Dict,
+):
     filename = f"survey_{kind}.{platform}.jinja"
     template = env.get_template(filename)
     return template.render(**context_data)
 
 
 def get_platform_js_resources(
-        platform: str="jquery",
-        resource_url: str=SURVEY_JS_CDN,
-    ):
+    platform: str = "jquery",
+    resource_url: str = SURVEY_JS_CDN,
+):
     """
     Get the list of suggested JS resources for a platform. if not using the
     CDN, only the main SurveyJS JS file is returned.
@@ -55,9 +55,9 @@ def get_platform_js_resources(
 
 
 def get_theme_css_resources(
-        theme: str="default",
-        resource_url: str=SURVEY_JS_CDN,
-    ):
+    theme: str = "default",
+    resource_url: str = SURVEY_JS_CDN,
+):
     """
     Get the list of suggested CSS resources for a theme. if not using the
     CDN, only the main SurveyJS CSS file is returned.
@@ -81,13 +81,13 @@ def get_theme_css_resources(
 
 
 def get_survey_js(
-        form_json: str="",
-        form_data: Dict[str, Any]=None,
-        html_id: str="questions_form",
-        action: str="",
-        theme: str="default",
-        platform: str="jquery"
-    ):
+    form_json: str = "",
+    form_data: Dict[str, Any] = None,
+    html_id: str = "questions_form",
+    action: str = "",
+    theme: str = "default",
+    platform: str = "jquery",
+):
     """
     Get the SurveyJS initialization script and form definition.
 
@@ -122,13 +122,13 @@ def get_survey_js(
 
 
 def get_form_page(
-        title: str="",
-        html_id: str="questions_form",
-        platform: str="jquery",
-        survey_js: str="",
-        js_resources: List=None,
-        css_resources: List=None,
-    ):
+    title: str = "",
+    html_id: str = "questions_form",
+    platform: str = "jquery",
+    survey_js: str = "",
+    js_resources: List = None,
+    css_resources: List = None,
+):
     """
     Generate a standalone SurveyJS HTML page.
 

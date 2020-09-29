@@ -193,10 +193,7 @@ class Form(object):
         survey = self._construct_survey()
         return survey.json(by_alias=True, include=INCLUDE_KEYS)
 
-    def render_js(
-            self,
-            form_data: Dict[str, Any]=None
-        ):
+    def render_js(self, form_data: Dict[str, Any] = None):
         """
         Generate the SurveyJS initialization code for the chosen platform.
 
@@ -215,11 +212,7 @@ class Form(object):
             platform=self.platform,
         )
 
-    def render_html(
-            self,
-            title: str=None,
-            form_data: Dict[str, Any]=None
-        ):
+    def render_html(self, title: str = None, form_data: Dict[str, Any] = None):
         """
         Render a full HTML page showing this form.
 
@@ -245,11 +238,7 @@ class Form(object):
             css_resources=self.css,
         )
 
-    def validate(
-            self,
-            form_data: Dict[str, Any],
-            set_errors: bool=False
-        ):
+    def validate(self, form_data: Dict[str, Any], set_errors: bool = False):
         """
         Server side validation mimics what client side validation should do. This
         means that any validation errors here are due to form data being sent from
@@ -296,12 +285,7 @@ class FormPage(object):
         Optional list of parameters to be passed to the SurveyJS page object.
     """
 
-    def __init__(
-            self,
-            form: Type[Form],
-            name: str = "",
-            **params
-    ):
+    def __init__(self, form: Type[Form], name: str = "", **params):
         self.form = form()
         if name == "":
             name = self.form.name

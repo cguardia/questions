@@ -38,7 +38,9 @@ def download_surveyjs(path, platform, theme):
 @click.command()
 @click.argument("platform")
 @click.argument("theme")
-@click.option("--include-widgets", default=False, help="include widget resources", is_flag=True)
+@click.option(
+    "--include-widgets", default=False, help="include widget resources", is_flag=True
+)
 def list_resources(platform, theme, include_widgets):
     """
     List required resources for a platform and theme.
@@ -66,7 +68,7 @@ def list_resources(platform, theme, include_widgets):
                     click.echo(f"    {url}")
         click.echo()
     click.echo()
-    click.echo("CSS resources:")
+    click.echo("Required CSS resources:")
     for url in css:
         click.echo(f"    {url}")
     if include_widgets:
