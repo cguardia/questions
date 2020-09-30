@@ -84,6 +84,11 @@ class Form(object):
         survey = Survey(**self.params)
         survey.pages.append(default_page)
         self._add_elements(survey, self, top_level=True)
+        # get rid of duplicates
+        self._extra_js = list(set(self._extra_js))
+        self._extra_css = list(set(self._extra_css))
+        if self._extra_js:
+            self._extra_js.append(f"{self.resource_url}/surveyjs-widgets.js")
         return survey
 
     def _add_elements(self, survey, form, top_level=False, container_name="questions"):
@@ -114,29 +119,33 @@ class Form(object):
                     self._form_elements[element.name] = element
                     if element.extra_js != []:
                         for js in element.extra_js:
+                            url = js
+                            if self.resource_url != SURVEY_JS_CDN:
+                                filename = js.split("/")[-1]
+                                url = f"{self.resource_url}/{filename}"
                             if (
-                                js not in extra_js
-                                and js not in self._extra_js
-                                and js not in self.required_js
+                                url not in extra_js
+                                and url not in self._extra_js
+                                and url not in self.required_js
                             ):
-                                extra_js.append(js)
+                                extra_js.append(url)
                     if element.extra_css != []:
                         for css in element.extra_css:
+                            url = css
+                            if self.resource_url != SURVEY_JS_CDN:
+                                filename = js.split("/")[-1]
+                                url = f"{self.resource_url}/{filename}"
                             if (
-                                css not in extra_css
-                                and css not in self._extra_css
-                                and css not in self.required_css
+                                url not in extra_css
+                                and url not in self._extra_css
+                                and url not in self.required_css
                             ):
-                                extra_css.append(css)
+                                extra_css.append(url)
                     if top_level:
                         container = survey.pages[0].questions
                     else:
                         container = getattr(survey, container_name)
                     container.append(element)
-        if extra_js != []:
-            survey_widgets = f"{self.resource_url}/surveyjs-widgets.js"
-            if survey_widgets not in self._extra_js:
-                extra_js.append(survey_widgets)
         self._extra_js = self._extra_js + extra_js
         self._extra_css = self._extra_css + extra_css
 

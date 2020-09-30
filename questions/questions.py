@@ -141,7 +141,7 @@ class TextQuestion(Question):
     prefix: str = ""
     auto_unmask: bool = True
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://unpkg.com/inputmask@5.0.3/dist/inputmask.js",
     ]
 
@@ -391,7 +391,7 @@ class TagBoxQuestion(DropdownQuestion):
     kind: str = "tagbox"
     select2_config: str = ""
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js",
     ]
     extra_css: List[HttpUrl] = [
@@ -410,7 +410,7 @@ class JQueryUIDatePickerQuestion(TextQuestion):
     max_date: str = ""
     min_date: str = ""
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://code.jquery.com/ui/1.11.4/jquery-ui.min.js",
     ]
     extra_css: List[HttpUrl] = [
@@ -434,7 +434,7 @@ class BootstrapDatePickerQuestion(TextQuestion):
     days_of_week_highlighted: str = ""
     disable_touch_keyboard: bool = True
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://unpkg.com/moment@2.24.0/moment.js",
         "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js",
     ]
@@ -452,7 +452,7 @@ class Select2Question(DropdownQuestion):
     render_as: str = "select2"
     select2_config: str = ""
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js",
     ]
     extra_css: List[HttpUrl] = [
@@ -469,7 +469,7 @@ class BarRatingQuestion(DropdownQuestion):
     rating_theme: Literal[settings.BAR_RATING_THEMES] = "fontawesome-stars"
     show_values: bool = False
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://unpkg.com/jquery-bar-rating",
     ]
     extra_css: List[HttpUrl] = [
@@ -494,7 +494,7 @@ class SortableJSQuestion(CheckboxQuestion):
     empty_text: str = ""
     max_answers_count: int = -1
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://unpkg.com/sortablejs@1.7.0/Sortable.js",
     ]
 
@@ -516,7 +516,7 @@ class NoUISliderQuestion(Question):
     direction: str = "ltr"
     tooltips: bool = True
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://unpkg.com/nouislider@9.2.0/distribute/nouislider.js",
         "https://unpkg.com/wnumb@1.1.0",
     ]
@@ -533,7 +533,7 @@ class CKEditorQuestion(Question):
     kind: str = "editor"
     height: str = "300px"
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js",
     ]
 
@@ -548,7 +548,7 @@ class BootstrapSliderQuestion(Question):
     range_min: int = 0
     range_max: int = 100
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.js",
     ]
     extra_css: List[HttpUrl] = [
@@ -569,7 +569,7 @@ class EmotionsRatingQuestion(DropdownQuestion):
     bg_emotion: str = "happy"
     emotion_color: str = "FF0066"
     extra_js: List[HttpUrl] = [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
         "https://unpkg.com/emotion-ratings@2.0.1/dist/emotion-ratings.js",
     ]
 

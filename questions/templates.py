@@ -46,13 +46,14 @@ def get_platform_js_resources(
         The list of resource URLs.
     """
     survey_js = f"{resource_url}/survey.{platform}.min.js"
-    widgets = f"{resource_url}/surveyjs-widgets.js"
     platform_js = []
-    if resource_url == SURVEY_JS_CDN:
-        for js in SUGGESTED_JS_BY_PLATFORM[platform]:
+    for js in SUGGESTED_JS_BY_PLATFORM[platform]:
+        if resource_url == SURVEY_JS_CDN:
             platform_js.append(js)
+        else:
+            filename = js.split("/")[-1]
+            platform_js.append(f"{resource_url}/{filename}")
     platform_js.append(survey_js)
-    platform_js.append(widgets)
     return platform_js
 
 

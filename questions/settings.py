@@ -26,7 +26,7 @@ SUGGESTED_JS_BY_PLATFORM = {
         "https://npmcdn.com/@angular/platform-browser-dynamic@2.0.0-rc.5/bundles/platform-browser-dynamic.umd.js",
     ],
     "jquery": [
-        "https://unpkg.com/jquery",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
     ],
     "knockout": [
         "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js",

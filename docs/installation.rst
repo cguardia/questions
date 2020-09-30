@@ -70,9 +70,12 @@ module corresponding to your platform to the dependencies section in your
  - survey-react
  - survey-vue
 
- If you have ``npm`` available, but are not building a JS application and only
- want the SurveyJS resources, create a directory for static resources in your
- Python web application project, and do the following:
+It's also necessary to add the SurveyJS custom widgets (`surveyjs-widgets`),
+since they are included in Questions.
+
+If you have ``npm`` available, but are not building a JS application and only
+want the SurveyJS resources, create a directory for static resources in your
+Python web application project, and do the following:
 
 .. code-block:: console
 
@@ -80,6 +83,7 @@ module corresponding to your platform to the dependencies section in your
     $ cd static
     $ npm init
     $ npm install survey-knockout
+    $ npm install surveyjs-widgets
 
 These commands will download the minimal set of resources for SurveyJS. After
 they complete successfully, the files will be under
@@ -113,7 +117,9 @@ The themes are:
  - winter
  - winterstone
 
-This command will download all the required resources to the directory specified. 
+This command will download all the required resources to the directory specified.
+This is by far the simplest way to get running if you don't plan to do any
+javascript development as part of your application.
 
 Independently of the method you use to download the resources. You will need to
 set up your application to use the resulting resource directory. If all
@@ -149,7 +155,7 @@ resources for your application, Questions includes a script to list them:
 
 This will list all required resources. Note that custom widgets, like Select2,
 require extra JS and CSS resources. To find out if the question types you are
-using depend on extra resources, add the `'include-widgets`` flag to the
+using depend on extra resources, add the `'--include-widgets`` flag to the
 command.
 
 .. _npm: https://www.npmjs.com/get-npm
