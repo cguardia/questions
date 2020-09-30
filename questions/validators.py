@@ -10,6 +10,13 @@ from simpleeval import InvalidExpression
 from .questions import Validator
 
 
+class ValidationError(Exception):
+    """
+    Validation error exception, for use by Form.update_object.
+    """
+    pass
+
+
 def text_validator(validator: Validator, value: Any, form_data: Dict[str, Any]):
     """Validate length of a text value, and whether digits are allowed.
 

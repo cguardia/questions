@@ -41,6 +41,7 @@ from .questions import SortableJSQuestion
 from .questions import TagBoxQuestion
 from .questions import TextQuestion
 from .questions import TextValidator
+from .validators import ValidationError
 
 
 __all__ = [
@@ -80,4 +81,5 @@ __all__ = [
     "TagBoxQuestion",
     "TextQuestion",
     "TextValidator",
+    "ValidationError",
 ]

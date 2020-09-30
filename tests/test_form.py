@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
 """Tests for `form` package."""
+import pytest
 
 from questions import form
 from questions import questions
 from questions import TextValidator
+from questions import ValidationError
 
 
 def test_initialize():
@@ -176,7 +178,7 @@ def test_validate_with_validators_valid():
         text1 = questions.TextQuestion(validators=[text_validator])
 
     test_form = TestForm(name="testing")
-    form_data = {"text1": "hello is enough"}
+    form_data = {"text1": "you had me at hello"}
     assert test_form.validate(form_data) is True
     assert "__errors__" not in form_data
 
@@ -191,3 +193,40 @@ def test_validate_with_validators_invalid_with_set_errors():
     form_data = {"text1": "Bye"}
     assert test_form.validate(form_data, set_errors=True) is False
     assert form_data["__errors__"][0]["question"] == "text1"
+
+
+def test_update_object():
+    text_validator = TextValidator(min_length=5)
+
+    class AnyObj(object):
+        def __init__(self, value):
+            self.text1 = value
+
+    class TestForm(form.Form):
+        text1 = questions.TextQuestion(validators=[text_validator])
+
+    test_form = TestForm(name="testing")
+    form_data = {"text1": "hello"}
+    anyobj = AnyObj("xxx")
+    assert anyobj.text1 == "xxx"
+    test_form.update_object(anyobj, form_data)
+    assert anyobj.text1 == "hello"
+
+
+def test_update_object_validation_error():
+    text_validator = TextValidator(min_length=5)
+
+    class AnyObj(object):
+        def __init__(self, value):
+            self.text1 = value
+
+    class TestForm(form.Form):
+        text1 = questions.TextQuestion(validators=[text_validator])
+
+    test_form = TestForm(name="testing")
+    form_data = {"text1": "bad"}
+    anyobj = AnyObj("xxx")
+    assert anyobj.text1 == "xxx"
+    with pytest.raises(ValidationError):
+        test_form.update_object(anyobj, form_data)
+    assert anyobj.text1 == "xxx"

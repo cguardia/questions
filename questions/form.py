@@ -21,6 +21,7 @@ from .templates import get_platform_js_resources
 from .templates import get_survey_js
 from .templates import get_theme_css_resources
 from .validators import call_validator
+from .validators import ValidationError
 
 
 class Form(object):
@@ -270,6 +271,27 @@ class Form(object):
         if set_errors:
             form_data["__errors__"] = errors
         return validated
+
+    def update_object(self, obj: Any, form_data: Dict[str, Any]):
+        """
+        Utility method to set an object's attributes with data obtained from a form.
+        This method validates the data before setting the object's attributes.
+
+        :param obj:
+            The object to set attributes on.
+
+        :param form_data:
+            A dictionary-like object with the form data to be validated.
+
+        :Raises:
+            questions.validators.ValidationError if validation does not pass.
+        """
+        if self.validate(form_data):
+            # call to validate sets the form elements beforehand
+            for name in self._form_elements.keys():
+                setattr(obj, name, form_data[name])
+        else:
+            raise ValidationError
 
 
 class FormPage(object):
