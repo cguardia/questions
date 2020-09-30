@@ -11,8 +11,10 @@ JQuery
 jquery
 ko
 repo
+surveyjs
 sortable
 submodules
+ValidationError
 validator
 validators
 virtualenvwrapper

@@ -81,13 +81,12 @@ Python web application project, and do the following:
 
     $ mkdir static
     $ cd static
-    $ npm init
     $ npm install survey-knockout
     $ npm install surveyjs-widgets
 
-These commands will download the minimal set of resources for SurveyJS. After
-they complete successfully, the files will be under
-`./static/node_modules/survey-knockout`.
+These commands will download the complete set of resources for the selected
+platform. After they complete successfully, the files will be under
+`./static/node_modules/`.
 
 If ``npm`` is not available, or you can't use it, Questions includes a command
 line script to download the required files. Make sure your virtual environment
@@ -123,19 +122,15 @@ javascript development as part of your application.
 
 Independently of the method you use to download the resources. You will need to
 set up your application to use the resulting resource directory. If all
-resources are present in the same directory, pass in the URL for this directory
-when creating the form, like this::
+resources are present in the same directory, all that is needed is to pass in
+the URL for this directory when creating the form, like this::
 
-    # If the resources were installed using npm
-    form = Form(resource_url="/static/node_modules/survey-knockout")
-
-    # If the resources were installed using the download_surveyjs script
     form = Form(resource_url="/static/your/path")
 
-If the resources are stored using a different directory layout, it will be
-necessary to add the resource definitions to the HTML templates by hand. How to
-do this varies from framework to framework. In Flask, the following will work,
-assuming you are using the default `static` directory:
+If the resources are stored using ``npm`` or a different directory layout, it
+will be necessary to add the resource definitions to the HTML templates by hand.
+How to do this varies from framework to framework. In Flask, the following will
+work, assuming you are using the default `static` directory:
 
 .. code-block:: html+jinja
 
@@ -146,8 +141,9 @@ assuming you are using the default `static` directory:
     <link rel="stylesheet" href="{{ url_for('static',
         filename='npm_modules/survey-knockout/survey.css') }}" />
 
-Resources vary by platform and theme. To make sure you have all the required
-resources for your application, Questions includes a script to list them:
+Resources vary by platform, theme and types of questions used. To make sure you
+have all the required resources for your application, Questions includes a
+script to list them:
 
 .. code-block:: console
 
