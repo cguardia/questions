@@ -209,7 +209,7 @@ and forth between the pages. The final page will show a `complete` button::
         birthdate = TextQuestion(input_type="date")
 
 
-    class Profile(Form):
+    class ProfileForm(Form):
         page_one = FormPage(PageOne, title="Identification Information")
         page_two = FormPage(PageTwo, title="Additional Information")
 
@@ -250,7 +250,7 @@ objects stored in a database, for example. To set up an edit form in
 Questions, simply pass in a dictionary with the data to the form rendering
 method, using the ``form_data`` parameter::
 
-    form = Profile()
+    form = ProfileForm()
 
     profile_data = {
      'name': 'John Smith',
@@ -263,6 +263,25 @@ method, using the ``form_data`` parameter::
 
 Here we are using a simple dictionary to set up the data, but of course the
 usual thing to do for an edit form would be to get the data from a database.
+
+Updating objects with form data
+-------------------------------
+
+Since we are on the subject of edit forms, it's a good time to mention that
+Questions provides an utility method for updating objects with data coming
+from a form::
+
+    @app.route("/", methods=("POST",))
+    def post():
+        form = ProfileForm()
+        profile = User.get_profile("jsmith")  # sample generic code
+        form_data = request.get_json()
+        form.update_object(profile, form_data)
+
+The ``update_object`` method does two things. First, it validates the data,
+to avoid getting invalid data into the object. It then goes through all the
+form fields and sets the corresponding attributes of the object with the
+values from the form.
 
 Validation
 ==========
@@ -285,7 +304,7 @@ SurveyJS has five standard validators:
    (``regex``).
  - `Email`. Fails if the entered value is not a valid e-mail.
 
-Questions allows the use of any of this validators, using its corresponding
+Questions allows the use of any of these validators, using its corresponding
 validator classes::
 
     from questions import Form

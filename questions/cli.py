@@ -1,4 +1,12 @@
-"""Console scripts for questions."""
+"""
+Console scripts for questions.
+
+ - list_resources PLATFORM THEME [--include-widgets]
+     Lists all CSS and JS resources needed to run SurveyJS
+
+ - download_surveyjs PATH PLATFORM THEME
+     Downloads all CSS and JS resources needed to run SurveyJS
+"""
 import click
 import requests
 
