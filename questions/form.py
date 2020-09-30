@@ -16,6 +16,7 @@ from .settings import INCLUDE_KEYS
 from .settings import SURVEY_JS_CDN
 from .settings import SURVEY_JS_PLATFORMS
 from .settings import SURVEY_JS_THEMES
+from .settings import SURVEY_JS_WIDGETS
 from .templates import get_form_page
 from .templates import get_platform_js_resources
 from .templates import get_survey_js
@@ -49,6 +50,13 @@ class Form(object):
     :param params:
         Optional list of parameters to be passed to the SurveyJS form object.
     """
+    questions_resource_url = SURVEY_JS_CDN
+
+
+    @classmethod
+    def set_resource_url(cls, url: str):
+        cls.questions_resource_url = url
+
 
     def __init__(
         self,
@@ -57,7 +65,7 @@ class Form(object):
         html_id: str = "questions_form",
         theme: Literal[SURVEY_JS_THEMES] = "default",
         platform: Literal[SURVEY_JS_PLATFORMS] = "jquery",
-        resource_url: str = SURVEY_JS_CDN,
+        resource_url: str = None,
         **params,
     ):
         if name == "":
@@ -67,6 +75,8 @@ class Form(object):
         self.html_id = html_id
         self.theme = theme
         self.platform = platform
+        if resource_url is None:
+            resource_url = self.questions_resource_url
         self.resource_url = resource_url
         self.params = params
         self._extra_js = []
@@ -77,6 +87,12 @@ class Form(object):
         return self.render_html(form_data=form_data)
 
     def _construct_survey(self):
+        """
+        Goes through all the form elements and creates a Survey object, which will
+        be used to generate the JSON for initializing SurveyJS. As a side effect,
+        populates extra CSS and JS resources. Also keeps a dictionary of all form
+        elements, used by validation and update object methods.
+        """
         self._extra_js = []
         self._extra_css = []
         self._form_elements = {}
@@ -88,10 +104,14 @@ class Form(object):
         self._extra_js = list(set(self._extra_js))
         self._extra_css = list(set(self._extra_css))
         if self._extra_js:
-            self._extra_js.append(f"{self.resource_url}/surveyjs-widgets.js")
+            self._extra_js.append(f"{self.resource_url}/{SURVEY_JS_WIDGETS}")
         return survey
 
     def _add_elements(self, survey, form, top_level=False, container_name="questions"):
+        """
+        Method to put form elements inside a container. Needs to be recursive so that
+        pages and panels are properly nested.
+        """
         extra_js = []
         extra_css = []
         for element_name, element in form.__class__.__dict__.items():

@@ -41,6 +41,7 @@ from .questions import SortableJSQuestion
 from .questions import TagBoxQuestion
 from .questions import TextQuestion
 from .questions import TextValidator
+from .settings import SURVEY_JS_CDN
 from .validators import ValidationError
 
 

@@ -104,11 +104,30 @@ directory, and passing the URL for this directory to the form constructor::
     prefs = PreferencesForm(resource_url="/static_resources")
 
 This is the easiest way to do it, and requires no changes to the HTML above.
+If your application includes many forms, you can set the resource URL for all
+forms using the ``set_resource_url`` class method of the :class:`Form`
+class::
+
+    from questions import Form
+
+
+    class PreferencesForm(Form):
+        email = TextQuestion(input_type="email")
+        email_format = DropdownQuestion(choices=["PDF", "HTML", "Plain Text"])
+
+
+    Form.set_resource_url("/static_resources")
+    prefs = PreferencesForm()
+    other = OtherForm()
+
+In this example, both the `prefs` and `other` form instances will use the
+`/static_resources` URL for getting the form resources.
 
 The other way to do this also requires downloading or installing all the
 required resources, but instead of using the `resource_url` parameter, remove
 the JS and CSS loops from the HTML template, and in their place put in the
-list of locally installed resources.
+list of locally installed resources. See :doc:`installation` to learn how
+this is done.
 
 Panels
 ======

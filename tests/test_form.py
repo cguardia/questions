@@ -7,6 +7,7 @@ from questions import form
 from questions import questions
 from questions import TextValidator
 from questions import ValidationError
+from questions.settings import SURVEY_JS_CDN
 
 
 def test_initialize():
@@ -44,6 +45,7 @@ def test_construct_survey_with_extra_js():
     assert isinstance(survey, questions.Survey)
     assert "text1" in test_form._form_elements
     assert "select2.min.js" in test_form.extra_js[0]
+    assert "cdnjs" in test_form.extra_js[0]
 
 
 def test_construct_survey_with_extra_css():
@@ -55,6 +57,7 @@ def test_construct_survey_with_extra_css():
     assert isinstance(survey, questions.Survey)
     assert "text1" in test_form._form_elements
     assert "select2.min.css" in test_form.extra_css[0]
+    assert "cdnjs" in test_form.extra_css[0]
 
 
 def test_construct_survey_with_extra_js_and_resource_url():
@@ -77,6 +80,32 @@ def test_construct_survey_with_extra_css_and_resource_url():
     assert isinstance(survey, questions.Survey)
     assert "text1" in test_form._form_elements
     assert "static/select2.min.css" in test_form.extra_css[0]
+
+
+def test_construct_survey_with_extra_js_and_set_resource_url():
+    class TestForm(form.Form):
+        text1 = questions.Select2Question()
+
+    form.Form.set_resource_url('static')
+    test_form = TestForm(name="testing")
+    survey = test_form._construct_survey()
+    assert isinstance(survey, questions.Survey)
+    assert "text1" in test_form._form_elements
+    assert "static/select2.min.js" in test_form.extra_js[0]
+    form.Form.set_resource_url(SURVEY_JS_CDN)
+
+
+def test_construct_survey_with_extra_css_and_set_resource_url():
+    class TestForm(form.Form):
+        text1 = questions.TagBoxQuestion()
+
+    form.Form.set_resource_url('static')
+    test_form = TestForm(name="testing")
+    survey = test_form._construct_survey()
+    assert isinstance(survey, questions.Survey)
+    assert "text1" in test_form._form_elements
+    assert "static/select2.min.css" in test_form.extra_css[0]
+    form.Form.set_resource_url(SURVEY_JS_CDN)
 
 
 def test_construct_survey_no_questions_elements():
