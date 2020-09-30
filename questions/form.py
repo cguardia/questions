@@ -133,7 +133,7 @@ class Form(object):
                         for css in element.extra_css:
                             url = css
                             if self.resource_url != SURVEY_JS_CDN:
-                                filename = js.split("/")[-1]
+                                filename = css.split("/")[-1]
                                 url = f"{self.resource_url}/{filename}"
                             if (
                                 url not in extra_css

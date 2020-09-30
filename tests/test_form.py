@@ -57,6 +57,28 @@ def test_construct_survey_with_extra_css():
     assert "select2.min.css" in test_form.extra_css[0]
 
 
+def test_construct_survey_with_extra_js_and_resource_url():
+    class TestForm(form.Form):
+        text1 = questions.Select2Question()
+
+    test_form = TestForm(name="testing", resource_url="static")
+    survey = test_form._construct_survey()
+    assert isinstance(survey, questions.Survey)
+    assert "text1" in test_form._form_elements
+    assert "static/select2.min.js" in test_form.extra_js[0]
+
+
+def test_construct_survey_with_extra_css_and_resource_url():
+    class TestForm(form.Form):
+        text1 = questions.TagBoxQuestion()
+
+    test_form = TestForm(name="testing", resource_url="static")
+    survey = test_form._construct_survey()
+    assert isinstance(survey, questions.Survey)
+    assert "text1" in test_form._form_elements
+    assert "static/select2.min.css" in test_form.extra_css[0]
+
+
 def test_construct_survey_no_questions_elements():
     class TestForm(form.Form):
         text1 = "just text"
