@@ -34,7 +34,14 @@ def download_surveyjs(path, platform, theme):
     click.echo()
     js = get_platform_js_resources(platform=platform, resource_url=SURVEY_JS_CDN)
     css = get_theme_css_resources(theme=theme, resource_url=SURVEY_JS_CDN)
-    for url in js + css:
+    widgets_js = set()
+    widgets_css = set()
+    for question in QUESTION_TYPES:
+        extra_js = question.__field_defaults__.get("extra_js", [])
+        widgets_js.update(extra_js)
+        extra_css = question.__field_defaults__.get("extra_css", [])
+        widgets_css.update(extra_css)
+    for url in js + css + list(widgets_js) + list(widgets_css):
         resource = requests.get(url, allow_redirects=True)
         filename = path + "/" + resource.url.split("/")[-1]
         with open(filename, "wb") as downloaded:
