@@ -6,3 +6,8 @@ History
 --------------------
 
 * First release on PyPI.
+
+0.5.0a1 (dev)
+-------------
+
+
