@@ -2,7 +2,7 @@
 History
 =======
 
-0.1.0 (2020-09-30)
-------------------
+0.5.0a0 (2020-10-01)
+--------------------
 
-* First (alpha) release on PyPI.
+* First release on PyPI.
