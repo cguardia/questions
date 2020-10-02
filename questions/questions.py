@@ -165,7 +165,6 @@ class ChoicesQuestion(Question):
     other_text: str = "Other"
     other_error_text: str = ""
     other_place_holder: str = ""
-    none_text: str = "None"
 
 
 class RadioGroupQuestion(ChoicesQuestion):
@@ -198,6 +197,7 @@ class CheckboxQuestion(ChoicesQuestion):
     kind: str = "checkbox"
     has_none: bool = False
     has_select_all: bool = False
+    none_text: str = "None"
     select_all_text: str = ""
 
 

@@ -86,7 +86,7 @@ def test_construct_survey_with_extra_js_and_set_resource_url():
     class TestForm(form.Form):
         text1 = questions.Select2Question()
 
-    form.Form.set_resource_url('static')
+    form.Form.set_resource_url("static")
     test_form = TestForm(name="testing")
     survey = test_form._construct_survey()
     assert isinstance(survey, questions.Survey)
@@ -99,7 +99,7 @@ def test_construct_survey_with_extra_css_and_set_resource_url():
     class TestForm(form.Form):
         text1 = questions.TagBoxQuestion()
 
-    form.Form.set_resource_url('static')
+    form.Form.set_resource_url("static")
     test_form = TestForm(name="testing")
     survey = test_form._construct_survey()
     assert isinstance(survey, questions.Survey)

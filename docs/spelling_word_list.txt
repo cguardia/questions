@@ -10,6 +10,7 @@ javascript
 JQuery
 jquery
 ko
+redisplay
 repo
 surveyjs
 sortable

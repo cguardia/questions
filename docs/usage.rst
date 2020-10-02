@@ -362,7 +362,16 @@ To do that simply call the ``validate`` method on the form data::
 
     @app.route("/", methods=("POST",))
     def post():
-        form.ValidatedForm()
+        form = form.ValidatedForm()
         form_data = request.get_json()
         if form.validate(form_data):
             # validation successful. Save data or something.
+            return redirect("success_page")
+        else:
+            return form.render_html(form_data=form_data)
+
+This example demonstrates a common pattern for responding to form POST
+requests. If the validation is successful, the data is saved, and then we
+return a redirection to the success or thanks page. If validation fails,
+we redisplay the form with the data that was sent, and the errors will be
+highlighted.

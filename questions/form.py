@@ -50,13 +50,12 @@ class Form(object):
     :param params:
         Optional list of parameters to be passed to the SurveyJS form object.
     """
-    questions_resource_url = SURVEY_JS_CDN
 
+    questions_resource_url = SURVEY_JS_CDN
 
     @classmethod
     def set_resource_url(cls, url: str):
         cls.questions_resource_url = url
-
 
     def __init__(
         self,

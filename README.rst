@@ -88,6 +88,7 @@ Let's show how easy things can be if your applications needs are simple. The
 following is a complete application using the popular Flask_ web framework::
 
     from flask import Flask
+    from flask import redirect
     from flask import request
 
     from questions import Form
@@ -116,7 +117,7 @@ following is a complete application using the popular Flask_ web framework::
 
     @app.route("/", methods=("GET",))
     def form():
-        form = Profile(navigate_to_url="/thanks")
+        form = Profile()
         return form.render_html()
 
     @app.route("/", methods=("POST",))
@@ -124,7 +125,7 @@ following is a complete application using the popular Flask_ web framework::
         form_data = request.get_json()
         # Here, we would save to a database or something
         print(form_data)
-        return "OK"
+        return redirect("/thanks")
 
     @app.route("/thanks")
     def thanks():

@@ -6,31 +6,70 @@ var json = {{ json }};
 
 var data = {{ data }};
 
-var sendDataToServer = function(result) {
+var sendDataToServer = function(sender, options) {
 
-fetch('{{ action }}', {
-    method: 'post',
-    headers: {
-        'Accept': 'text/html, text/plain, */*',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(result.data)
-})
-.then(function (response) {
-    return response;
-})
-.then(function (result) {
-    console.log('Redirect successful');
-})
-.catch (function (error) {
-    console.log('Request failed', error);
-});
+    var errorMessage = "Something went wrong on the server side. Please try again."
 
+    if (sender.isLastPage) {
+
+        fetch('{{ action }}', {
+            method: 'post',
+            headers: {
+                'Accept': 'text/html, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sender.data)
+        })
+        .then(function(response) {
+            replace_html = false;
+            if (response.ok) {
+                if (response.redirected) {
+                    sender.navigateToUrl=response.url;
+                } else {
+                    replace_html = response.text().then(function(text) {
+                        document.open();
+                        document.write(text);
+                        setTimeout(function() {
+                            var pages = survey.visiblePages;
+                            var error_page = -1;
+                            for (var i=0; i<pages.length; i++){
+                                if (pages[i].hasErrors(true, true)) {
+                                    error_page = i;
+                                    break;
+                                }
+                            }
+                            if (error_page != -1) {
+                                survey.currentPageNo = error_page;
+                            }
+                        }, 500);
+                     });
+                }
+            } else {
+                first = sender.getAllQuestions()[0];
+                options.errors[first] = response.statusText + ": " + errorMessage;
+            }
+            return replace_html;
+        })
+        .then(function(result) {
+            if (!result) {
+                options.complete();
+            }
+        })
+        .catch (function(error) {
+            first_question = sender.getAllQuestions()[0];
+            options.errors[first_question.name] = error.message + ": " + errorMessage;
+            options.complete();
+        });
+
+    } else {
+        options.complete();
+
+    }
 }
 
 var survey = new Survey.Model(json);
 survey.data = data;
 survey
-    .onComplete
+    .onServerValidateQuestions
     .add(sendDataToServer);
 new Vue({ el: '#{{ html_id }}', data: { survey: survey } });
