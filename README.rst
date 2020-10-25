@@ -21,6 +21,8 @@ The philosophy behind Questions is that modern form rendering usually requires
 integrating some complex Javascript widgets anyway, so why not skip the markup
 generation completely? 
 
+.. image:: https://www.delaguardia.com.mx/questions.gif
+
 In Questions, forms are defined in Python similarly to other form frameworks,
 but everything on the front end is handled by SurveyJS. This provides a lot of
 benefits:

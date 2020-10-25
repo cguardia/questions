@@ -1,6 +1,7 @@
 cli
 darkblue
 darkrose
+dev
 docstring
 docstrings
 dropdown
