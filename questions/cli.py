@@ -37,9 +37,9 @@ def download_surveyjs(path, platform, theme):
     widgets_js = set()
     widgets_css = set()
     for question in QUESTION_TYPES:
-        extra_js = question.__field_defaults__.get("extra_js", [])
+        extra_js = question.__fields__.get("extra_js").get_default()
         widgets_js.update(extra_js)
-        extra_css = question.__field_defaults__.get("extra_css", [])
+        extra_css = question.__fields__.get("extra_css").get_default()
         widgets_css.update(extra_css)
     for url in js + css + list(widgets_js) + list(widgets_css):
         resource = requests.get(url, allow_redirects=True)
@@ -75,7 +75,7 @@ def list_resources(platform, theme, include_widgets):
         click.echo()
         click.echo("Widget specific Javascript resources:")
         for question in QUESTION_TYPES:
-            extra_js = question.__field_defaults__.get("extra_js", [])
+            extra_js = question.__fields__.get("extra_js").get_default()
             if extra_js:
                 click.echo()
                 click.echo(f"{question.__name__}:")
@@ -90,7 +90,7 @@ def list_resources(platform, theme, include_widgets):
         click.echo()
         click.echo("Widget specific CSS resources:")
         for question in QUESTION_TYPES:
-            extra_css = question.__field_defaults__.get("extra_css", [])
+            extra_css = question.__fields__.get("extra_css").get_default()
             if extra_css:
                 click.echo()
                 click.echo(f"{question.__name__}:")
