@@ -21,7 +21,12 @@ History
 
 * Update dependencies to lastest versions.
 
-0.5.0a2 (dev)
+0.5.0a2 (2020-12-09)
+-------------
+
+* Fix bug with form parameters in from_json conversion.
+
+0.5.0a3 (dev)
 -------------
 
 * Unreleased.
