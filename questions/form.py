@@ -72,6 +72,8 @@ class Form(object):
 
     questions_resource_url = SURVEY_JS_CDN
 
+    default_params = {}
+
     @classmethod
     def set_resource_url(cls, url: str):
         cls.questions_resource_url = url
@@ -96,7 +98,8 @@ class Form(object):
         if resource_url is None:
             resource_url = self.questions_resource_url
         self.resource_url = resource_url
-        self.params = params
+        self.params = self.default_params.copy()
+        self.params.update(params)
         self._extra_js = []
         self._extra_css = []
         self._form_elements = {}
@@ -196,7 +199,7 @@ class Form(object):
                         )
                         setattr(NewForm, panel_name, form_panel)
             else:
-                NewForm.params[name] = element
+                NewForm.default_params[name] = element
 
     def _construct_survey(self):
         """
