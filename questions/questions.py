@@ -309,12 +309,12 @@ class MatrixQuestion(Question):
     """
 
     kind: str = "matrix"
-    columns: List[Dict[Union[int, str], str]]
-    rows: List[Dict[Union[int, str], str]]
+    columns: List[Union[str, Dict[Union[int, str], str]]]
+    rows: List[Union[str, Dict[Union[int, str], str]]]
     all_rows_required: bool = False
-    cells: Dict[str, Dict[str, str]]
+    cells: Dict[str, Dict[str, str]] = {}
     columns_visible_if: str = ""
-    rows_order: Literal[settings.ROW_ORDER_VALUES]
+    rows_order: Literal[settings.ROW_ORDER_VALUES] = "initial"
     rows_visible_if: str = ""
     show_header: bool = True
 
@@ -327,11 +327,11 @@ class MatrixDropdownQuestion(Question):
 
     kind: str = "matrixdropdown"
     columns: List[Dict[Union[int, str], Any]]
-    rows: List[Dict[Union[int, str], str]]
+    rows: List[Union[str, Dict[Union[int, str], str]]]
     all_rows_required: bool = False
-    cells: Dict[str, Dict[str, Any]]
+    cells: Dict[str, Dict[str, Any]] = {}
     columns_visible_if: str = ""
-    rows_order: Literal[settings.ROW_ORDER_VALUES]
+    rows_order: Literal[settings.ROW_ORDER_VALUES] = "initial"
     rows_visible_if: str = ""
     show_header: bool = True
     cell_type: Literal[settings.MATRIX_CELL_TYPES] = "dropdown"
@@ -353,11 +353,11 @@ class MatrixDynamicQuestion(Question):
 
     kind: str = "matrixdynamic"
     columns: List[Dict[Union[int, str], Any]]
-    rows: List[Dict[Union[int, str], str]]
+    rows: List[Dict[Union[int, str], str]] = []
     all_rows_required: bool = False
-    cells: Dict[str, Dict[str, Any]]
+    cells: Dict[str, Dict[str, Any]] = {}
     columns_visible_if: str = ""
-    rows_order: Literal[settings.ROW_ORDER_VALUES]
+    rows_order: Literal[settings.ROW_ORDER_VALUES] = "initial"
     rows_visible_if: str = ""
     show_header: bool = True
     cell_type: Literal[settings.MATRIX_CELL_TYPES] = "dropdown"
@@ -786,3 +786,35 @@ QUESTION_TYPES = [
     TagBoxQuestion,
     TextQuestion,
 ]
+
+
+QUESTION_NAMES_TO_TYPES = {
+    "barrating": BarRatingQuestion,
+    "boolean": BooleanQuestion,
+    "bootstrapdatepicker": BootstrapDatePickerQuestion,
+    "bootstrapslider": BootstrapSliderQuestion,
+    "checkbox": CheckboxQuestion,
+    "editor": CKEditorQuestion,
+    "comment": CommentQuestion,
+    "dropdown": DropdownQuestion,
+    "emotionsratings": EmotionsRatingQuestion,
+    "expression": ExpressionBlock,
+    "file": FileQuestion,
+    "html": HtmlBlock,
+    "image": ImageBlock,
+    "imagepicker": ImagePickerQuestion,
+    "datepicker": JQueryUIDatePickerQuestion,
+    "matrixdropdown": MatrixDropdownQuestion,
+    "matrixdynamic": MatrixDynamicQuestion,
+    "matrix": MatrixQuestion,
+    "microphone": MicrophoneQuestion,
+    "multipletext": MultipleTextQuestion,
+    "nouislider": NoUISliderQuestion,
+    "radiogroup": RadioGroupQuestion,
+    "rating": RatingQuestion,
+    "select2": Select2Question,
+    "signaturepad": SignaturePadQuestion,
+    "sortablelist": SortableJSQuestion,
+    "tagbox": TagBoxQuestion,
+    "text": TextQuestion,
+}

@@ -1,3 +1,6 @@
+import json
+import re
+
 from typing import Any
 from typing import Dict
 from typing import Type
@@ -11,6 +14,7 @@ from .questions import Page
 from .questions import PanelBlock
 from .questions import PanelDynamicBlock
 from .questions import Question
+from .questions import QUESTION_NAMES_TO_TYPES
 from .questions import Survey
 from .settings import INCLUDE_KEYS
 from .settings import SURVEY_JS_CDN
@@ -23,6 +27,21 @@ from .templates import get_survey_js
 from .templates import get_theme_css_resources
 from .validators import call_validator
 from .validators import ValidationError
+
+
+RENAMED_FIELDS = {
+    "type": "kind",
+    "isAllRowRequired": "all_rows_required",
+    "format": "expression_format",
+    "max": "max_value",
+    "min": "min_value",
+    "isRequired": "required",
+}
+
+
+def to_camel_case(name):
+    name = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", name).lower()
 
 
 class Form(object):
@@ -85,6 +104,100 @@ class Form(object):
     def __call__(self, form_data=None):
         return self.render_html(form_data=form_data)
 
+    @classmethod
+    def from_json(
+        cls,
+        form_json: str,
+        name: str,
+    ):
+        """
+        Generate a Form class definition from properly formatted JSON data. The
+        The generated form class can then be instantiated as needed.
+
+        :param form_json:
+            A well formed JSON string with a SurveyJS definition.
+        :param name:
+            The name of the generated class.
+
+        :Returns:
+            A new Python Type that is a subclass of Form.
+        """
+        NewForm = type(name, (cls,), {})
+        form_json = json.loads(form_json)
+        elements = form_json.items()
+        cls._add_type_elements(NewForm, elements)
+        return NewForm
+
+    @classmethod
+    def _add_type_elements(cls, NewForm, elements):
+        """
+        Recursively go through the JSON elements to add all specified form
+        elements to the passed in Type.
+        """
+        for name, element in elements:
+            if name == "pages":
+                for page in element:
+                    page_title = page.get("title", "Page")
+                    page_name = page.get("name", page_title)
+                    NewPage = type(page_name, (cls,), {})
+                    page_items = {}
+                    page_params = {}
+                    for key, value in page.items():
+                        if key in ["questions", "elements"]:
+                            page_items[key] = value
+                        else:
+                            if key in RENAMED_FIELDS:
+                                new_key = RENAMED_FIELDS[key]
+                            else:
+                                new_key = to_camel_case(key)
+                            page_params[new_key] = value
+                    if "name" in page_params:
+                        del page_params["name"]
+                    if page_items:
+                        cls._add_type_elements(NewPage, page_items.items())
+                    form_page = FormPage(NewPage, name=page_name, **page_params)
+                    setattr(NewForm, page_name, form_page)
+            elif name == "questions" or name == "elements":
+                for question_element in element:
+                    if question_element["type"] in QUESTION_NAMES_TO_TYPES:
+                        question_params = {}
+                        for key, value in question_element.items():
+                            if key in RENAMED_FIELDS:
+                                new_key = RENAMED_FIELDS[key]
+                            else:
+                                new_key = to_camel_case(key)
+                            question_params[new_key] = value
+                        new_element = QUESTION_NAMES_TO_TYPES[question_element["type"]](
+                            **question_params
+                        )
+                        setattr(NewForm, new_element.name, new_element)
+                    elif question_element["type"] in ["panel", "paneldynamic"]:
+                        panel_title = question_element.get("title", "Panel")
+                        panel_name = question_element.get("name", panel_title)
+                        Panel = type(panel_name, (cls,), {})
+                        dynamic = question_element["type"] == "paneldynamic"
+                        panel_items = {}
+                        panel_params = {}
+                        for key, value in question_element.items():
+                            if key in ["questions", "elements"]:
+                                panel_items[key] = value
+                            else:
+                                if key in RENAMED_FIELDS:
+                                    new_key = RENAMED_FIELDS[key]
+                                else:
+                                    new_key = to_camel_case(key)
+                                panel_params[new_key] = value
+                        if "name" in panel_params:
+                            del panel_params["name"]
+                        if panel_items:
+                            cls._add_type_elements(Panel, panel_items.items())
+                        form_panel = FormPanel(
+                            Panel, name=panel_name, dynamic=dynamic, **panel_params
+                        )
+                        setattr(NewForm, panel_name, form_panel)
+            else:
+                NewForm.params[name] = element
+
     def _construct_survey(self):
         """
         Goes through all the form elements and creates a Survey object, which will
@@ -126,12 +239,12 @@ class Form(object):
                     container = getattr(survey, container_name)
                     if element.dynamic:
                         panel = PanelDynamicBlock(name=name, **element.params)
-                        container_name = "template_elements"
+                        new_container_name = "template_elements"
                     else:
                         panel = PanelBlock(name=name, **element.params)
-                        container_name = "elements"
+                        new_container_name = "elements"
                     self._add_elements(
-                        panel, element.form, container_name=container_name
+                        panel, element.form, container_name=new_container_name
                     )
                     container.append(panel)
                 else:

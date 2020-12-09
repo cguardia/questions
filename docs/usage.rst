@@ -25,6 +25,36 @@ used when they are needed::
 
     prefs = PreferencesForm()
 
+Generating a form from a JSON file
+==================================
+
+SurveyJS offers a free to use (but not open source) form creator. Questions
+supports generating form classes from the JSON data that the form creator
+exports. To do that, instead of defining the class, use the ``from_json``
+method of the ``Form`` class::
+
+    from questions import Form
+
+    json = """
+    {
+        questions: [
+            {
+                type: "text",
+                name: "email",
+                inputType: "email"
+            },
+            {
+                type: "dropdown",
+                name: "email_format",
+                choices: ["PDF", "HTML", "Plain Text"]
+            }
+        ]
+    }
+    """
+
+    PreferencesForm = Form.from_json(json, "PreferencesForm")
+
+                  
 Displaying the forms
 ====================
 
