@@ -38,6 +38,7 @@ benefits:
   questions to show depending on the answers to previous ones.
 * Complex forms can be defined easily using class composition.
 * Easy multi-page forms, with no state-keeping headaches.
+* Import forms directly from JSON definitions using SurveyJS form creator.
 * Minimal code for simple apps. If you just need a form or two, you are set.
 * Zero Javascript code option. If you can use a CDN, no need to install or
   download any javascript.

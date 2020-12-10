@@ -9,3 +9,5 @@ recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 
 recursive-include docs *.rst *.txt conf.py Makefile make.bat *.jpg *.png *.gif
+
+recursive-include questions *.jinja
