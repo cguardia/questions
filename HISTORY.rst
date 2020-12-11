@@ -30,3 +30,13 @@ History
 --------------------
 
 * Make sure jinja templates are included in manifest.
+
+0.5.0a4 (dev)
+-------------
+
+* Update installation docs to mention typing-extensions requirement for
+  Python < 3.8.
+
+* Use correct default value for allow_clear in sugnature pad.
+
+* Set type hints to allow localization arrays in visible text properties.

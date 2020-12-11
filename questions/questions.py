@@ -96,8 +96,8 @@ class Question(_Base):
 
     kind: str
     name: str = ""
-    title: str = ""
-    description: str = ""
+    title: Union[str, Dict[str, str]] = ""
+    description: Union[str, Dict[str, str]] = ""
     required: bool = False
     visible: bool = True
     default_value: str = ""
@@ -128,7 +128,7 @@ class TextQuestion(Question):
     """
 
     kind: str = "text"
-    place_holder: str = ""
+    place_holder: Union[str, Dict[str, str]] = ""
     input_type: Literal[settings.TEXT_INPUT_TYPES] = "text"
     max_length: int = -1
     max_value: str = ""
@@ -162,9 +162,9 @@ class ChoicesQuestion(Question):
     choices_visible_if: str = ""
     hide_if_choices_empty: bool = True
     has_other: bool = False
-    other_text: str = "Other"
-    other_error_text: str = ""
-    other_place_holder: str = ""
+    other_text: Union[str, Dict[str, str]] = "Other"
+    other_error_text: Union[str, Dict[str, str]] = ""
+    other_place_holder: Union[str, Dict[str, str]] = ""
 
 
 class RadioGroupQuestion(ChoicesQuestion):
@@ -197,8 +197,8 @@ class CheckboxQuestion(ChoicesQuestion):
     kind: str = "checkbox"
     has_none: bool = False
     has_select_all: bool = False
-    none_text: str = "None"
-    select_all_text: str = ""
+    none_text: Union[str, Dict[str, str]] = "None"
+    select_all_text: Union[str, Dict[str, str]] = ""
 
 
 class ImagePickerQuestion(ChoicesQuestion):
@@ -214,9 +214,9 @@ class ImagePickerQuestion(ChoicesQuestion):
     image_fit: Literal[settings.IMAGE_FIT_VALUES] = "none"
     multi_select: bool = False
     has_other: bool = False
-    other_text: str = "Other"
-    other_error_text: str = ""
-    other_place_holder: str = ""
+    other_text: Union[str, Dict[str, str]] = "Other"
+    other_error_text: Union[str, Dict[str, str]] = ""
+    other_place_holder: Union[str, Dict[str, str]] = ""
 
 
 class BooleanQuestion(Question):
@@ -226,11 +226,11 @@ class BooleanQuestion(Question):
     """
 
     kind: str = "boolean"
-    label_true: str = ""
-    label_false: str = ""
+    label_true: Union[str, Dict[str, str]] = ""
+    label_false: Union[str, Dict[str, str]] = ""
     show_title: bool = False
-    value_true: str = "true"
-    value_false: str = "false"
+    value_true: Union[str, Dict[str, str]] = "true"
+    value_false: Union[str, Dict[str, str]] = "false"
 
 
 class SignaturePadQuestion(Question):
@@ -266,7 +266,7 @@ class CommentQuestion(Question):
     rows: int = 3
     cols: int = 50
     max_length: int = -1
-    place_holder: str = ""
+    place_holder: Union[str, Dict[str, str]] = ""
     text_update_mode: Literal[settings.TEXT_UPDATE_MODES] = "default"
 
 
@@ -276,8 +276,8 @@ class RatingQuestion(Question):
     """
 
     kind: str = "rating"
-    min_rate_description: str = ""
-    max_rate_description: str = ""
+    min_rate_description: Union[str, Dict[str, str]] = ""
+    max_rate_description: Union[str, Dict[str, str]] = ""
     rate_max: int = 5
     rate_min: int = 1
     rate_step: int = 1
@@ -327,7 +327,7 @@ class MatrixDropdownQuestion(Question):
 
     kind: str = "matrixdropdown"
     columns: List[Dict[Union[int, str], Any]]
-    rows: List[Union[str, Dict[Union[int, str], str]]]
+    rows: List[Dict[Union[int, str], Any]]
     all_rows_required: bool = False
     cells: Dict[str, Dict[str, Any]] = {}
     columns_visible_if: str = ""
@@ -353,7 +353,7 @@ class MatrixDynamicQuestion(Question):
 
     kind: str = "matrixdynamic"
     columns: List[Dict[Union[int, str], Any]]
-    rows: List[Dict[Union[int, str], str]] = []
+    rows: List[Dict[Union[int, str], Any]]
     all_rows_required: bool = False
     cells: Dict[str, Dict[str, Any]] = {}
     columns_visible_if: str = ""
@@ -591,7 +591,7 @@ class HtmlBlock(Question):
     """
 
     kind: str = "html"
-    html: str = ""
+    html: Union[str, Dict[str, str]] = ""
 
 
 class ImageBlock(Question):
@@ -648,27 +648,27 @@ class PanelDynamicBlock(Question):
     inner_indent: int = 1
     render_mode: Literal[settings.PANEL_RENDER_MODES] = "list"
     panel_count: int = 1
-    panel_add_text: str = ""
-    panel_remove_text: str = ""
-    template_title: str = ""
+    panel_add_text: Union[str, Dict[str, str]] = ""
+    panel_remove_text: Union[str, Dict[str, str]] = ""
+    template_title: Union[str, Dict[str, str]] = ""
     template_elements: List[Question] = []
     allow_add_panel: bool = True
     allow_remove_panel: bool = True
     confirm_delete: bool = False
-    confirm_delete_text: str = ""
+    confirm_delete_text: Union[str, Dict[str, str]] = ""
     default_value_from_last_panel: bool = False
-    key_duplication_error: str = ""
+    key_duplication_error: Union[str, Dict[str, str]] = ""
     key_name: str = ""
     max_panel_count: int = 100
     min_panel_count: int = 1
-    panel_add_text: str = ""
-    panel_next_text: str = ""
-    panel_prev_text: str = ""
-    panel_remove_text: str = ""
+    panel_add_text: Union[str, Dict[str, str]] = ""
+    panel_next_text: Union[str, Dict[str, str]] = ""
+    panel_prev_text: Union[str, Dict[str, str]] = ""
+    panel_remove_text: Union[str, Dict[str, str]] = ""
     panels_state: Literal[settings.PANEL_STATES] = "default"
     show_question_numbers: Literal[settings.SHOW_QUESTION_NUMBERS_VALUES] = "default"
     show_range_in_progress: bool = True
-    template_description: str = ""
+    template_description: Union[str, Dict[str, str]] = ""
     template_title_location: Literal[settings.TITLE_LOCATIONS] = "default"
 
 
@@ -679,9 +679,9 @@ class Page(_Base):
     """
 
     name: str = ""
-    title: str = ""
+    title: Union[str, Dict[str, str]] = ""
     questions: List[Question] = []
-    description: str = ""
+    description: Union[str, Dict[str, str]] = ""
     max_time_to_finish: int = 0
     navigation_buttons_visibility: Literal[settings.NAV_BUTTONS_VISIBILITY] = "inherit"
     question_title_location: Literal[settings.TITLE_LOCATIONS] = "default"
@@ -694,23 +694,23 @@ class Survey(_Base):
     rendering the questions contained in a form.
     """
 
-    title: str = ""
+    title: Union[str, Dict[str, str]] = ""
     pages: List[Page] = []
     calculated_values: List[Any] = []
     check_errors_mode: Literal[settings.CHECK_ERRORS_MODES] = "onNextPage"
     clear_invisible_values: Literal[settings.CLEAR_INVISIBLE_VALUES] = "onComplete"
-    completed_before_html: str = ""
-    completed_html: str = ""
+    completed_before_html: Union[str, Dict[str, str]] = ""
+    completed_html: Union[str, Dict[str, str]] = ""
     completed_html_on_condition: List[Dict[str, str]] = []
-    complete_text: str = ""
+    complete_text: Union[str, Dict[str, str]] = ""
     cookie_name: str = ""
-    description: str = ""
-    edit_text: str = ""
+    description: Union[str, Dict[str, str]] = ""
+    edit_text: Union[str, Dict[str, str]] = ""
     first_page_is_started: bool = False
     focus_first_question_automatic: bool = True
     focus_on_first_error: bool = True
     go_next_page_automatic: bool = False
-    loading_html: str = ""
+    loading_html: Union[str, Dict[str, str]] = ""
     locale: Literal[settings.LOCALES] = ""
     logo: HttpUrl = ""
     logo_fit: Literal[settings.IMAGE_FIT_VALUES] = "contain"
@@ -723,9 +723,9 @@ class Survey(_Base):
     mode: Literal[settings.SURVEY_MODES] = "edit"
     navigate_to_url: HttpUrl = ""
     navigate_to_url_on_condition: List[Dict[str, HttpUrl]] = []
-    page_next_text: str = ""
-    page_prev_text: str = ""
-    preview_text: str = ""
+    page_next_text: Union[str, Dict[str, str]] = ""
+    page_prev_text: Union[str, Dict[str, str]] = ""
+    preview_text: Union[str, Dict[str, str]] = ""
     progress_bar_type: Literal[settings.PROGRESS_BAR_TYPES] = "pages"
     question_description_location: Literal[
         settings.QUESTION_DESCRIPTION_LOCATIONS
@@ -737,7 +737,7 @@ class Survey(_Base):
     question_title_location: Literal[settings.TITLE_LOCATIONS] = "top"
     question_title_pattern: str = "numTitleRequire"
     question_title_template: str = ""
-    required_text: str = "*"
+    required_text: Union[str, Dict[str, str]] = "*"
     send_result_on_page_next: bool = False
     show_completed_page: bool = False
     show_navigation_buttons: Literal[settings.NAV_BUTTONS_POSITIONS] = "bottom"
@@ -750,7 +750,7 @@ class Survey(_Base):
     show_timer_panel: Literal[settings.SHOW_TIMER_VALUES] = "none"
     show_timer_panel_mode: Literal[settings.SHOW_TIMER_MODES] = "all"
     show_title: bool = True
-    start_survey_text: str = ""
+    start_survey_text: Union[str, Dict[str, str]] = ""
     store_others_as_comment: bool = True
     survey_id: str = ""
     survey_post_id: str = ""
