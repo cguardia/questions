@@ -309,8 +309,8 @@ class MatrixQuestion(Question):
     """
 
     kind: str = "matrix"
-    columns: List[Union[str, Dict[Union[int, str], str]]]
-    rows: List[Union[str, Dict[Union[int, str], str]]]
+    columns: List[Any]
+    rows: List[Any] = []
     all_rows_required: bool = False
     cells: Dict[str, Dict[str, str]] = {}
     columns_visible_if: str = ""
@@ -326,8 +326,8 @@ class MatrixDropdownQuestion(Question):
     """
 
     kind: str = "matrixdropdown"
-    columns: List[Dict[Union[int, str], Any]]
-    rows: List[Dict[Union[int, str], Any]]
+    columns: List[Any]
+    rows: List[Any] = []
     all_rows_required: bool = False
     cells: Dict[str, Dict[str, Any]] = {}
     columns_visible_if: str = ""
@@ -352,8 +352,8 @@ class MatrixDynamicQuestion(Question):
     """
 
     kind: str = "matrixdynamic"
-    columns: List[Dict[Union[int, str], Any]]
-    rows: List[Dict[Union[int, str], Any]]
+    columns: List[Any]
+    rows: List[Any] = []
     all_rows_required: bool = False
     cells: Dict[str, Dict[str, Any]] = {}
     columns_visible_if: str = ""
