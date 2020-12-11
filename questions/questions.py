@@ -242,7 +242,7 @@ class SignaturePadQuestion(Question):
     kind: str = "signaturepad"
     height: int = 200
     width: int = 300
-    allow_clear: bool = False
+    allow_clear: bool = True
 
 
 class MultipleTextQuestion(Question):
