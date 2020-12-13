@@ -40,3 +40,10 @@ History
 * Use correct default value for allow_clear in sugnature pad.
 
 * Set type hints to allow localization arrays in visible text properties.
+
+* Fix bug when generating classes from JSON with dynamic panels.
+
+* Add string representation methods to main classes.
+
+* Feature: add console script for generating code for classes created with
+  from_json method.

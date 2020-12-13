@@ -12,11 +12,17 @@ except ImportError:  # pragma: NO COVER
     from typing_extensions import Literal
 
 from . import settings
+from .utils import get_params_for_repr
 
 
 class _Base(BaseModel):
     """Base class for questions classes. Main responsibility is renaming
     Python parameter names to Javascript's camelCase convention."""
+
+    def __repr__(self):
+        class_name = self.__class__.__name__
+        params = get_params_for_repr(dict(self))
+        return f"{class_name}({params}\n    )"
 
     class Config:
 

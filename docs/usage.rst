@@ -54,6 +54,16 @@ method of the ``Form`` class::
 
     PreferencesForm = Form.from_json(json, "PreferencesForm")
 
+The forms generated using the ``from_json`` class method are dynamic types
+that have no code equivalent. Questions includes a console script that can
+generate actual Python code for these forms::
+
+.. code-block:: console
+
+    $ generate_code {class_name} path/to/file.json
+
+All the script needs is a class name for the generated form class, and the
+path to the JSON file with the SurveyJS form definition.
                   
 Displaying the forms
 ====================

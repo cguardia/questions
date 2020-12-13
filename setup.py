@@ -44,6 +44,7 @@ setup(
         'console_scripts': [
             'download_surveyjs=questions.cli:download_surveyjs',
             'list_resources=questions.cli:list_resources',
+            'generate_code=questions.cli:generate_code',
         ],
     },
     install_requires=requirements,

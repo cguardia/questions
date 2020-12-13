@@ -25,6 +25,7 @@ from .templates import get_form_page
 from .templates import get_platform_js_resources
 from .templates import get_survey_js
 from .templates import get_theme_css_resources
+from .utils import get_params_for_repr
 from .validators import call_validator
 from .validators import ValidationError
 
@@ -107,6 +108,16 @@ class Form(object):
     def __call__(self, form_data=None):
         return self.render_html(form_data=form_data)
 
+    def __repr__(self):
+        class_name = self.__class__.__name__
+        class_name = class_name[0].upper() + class_name[1:]
+        form_repr = f'{class_name}(\n        name="{self.name}"'
+        if self.params:
+            params = get_params_for_repr(self.params)
+            form_repr += f",{params}"
+        form_repr += "\n    )"
+        return form_repr
+
     @classmethod
     def from_json(
         cls,
@@ -142,11 +153,12 @@ class Form(object):
                 for page in element:
                     page_title = page.get("title", "Page")
                     page_name = page.get("name", page_title)
+                    page_name = page_name[0].upper() + page_name[1:]
                     NewPage = type(page_name, (cls,), {})
                     page_items = {}
                     page_params = {}
                     for key, value in page.items():
-                        if key in ["questions", "elements"]:
+                        if key in ["questions", "elements", "templateElements"]:
                             page_items[key] = value
                         else:
                             if key in RENAMED_FIELDS:
@@ -160,7 +172,7 @@ class Form(object):
                         cls._add_type_elements(NewPage, page_items.items())
                     form_page = FormPage(NewPage, name=page_name, **page_params)
                     setattr(NewForm, page_name, form_page)
-            elif name == "questions" or name == "elements":
+            elif name in ["questions", "elements", "templateElements"]:
                 for question_element in element:
                     if question_element["type"] in QUESTION_NAMES_TO_TYPES:
                         question_params = {}
@@ -177,12 +189,13 @@ class Form(object):
                     elif question_element["type"] in ["panel", "paneldynamic"]:
                         panel_title = question_element.get("title", "Panel")
                         panel_name = question_element.get("name", panel_title)
+                        panel_name = panel_name[0].upper() + panel_name[1:]
                         Panel = type(panel_name, (cls,), {})
                         dynamic = question_element["type"] == "paneldynamic"
                         panel_items = {}
                         panel_params = {}
                         for key, value in question_element.items():
-                            if key in ["questions", "elements"]:
+                            if key in ["questions", "elements", "templateElements"]:
                                 panel_items[key] = value
                             else:
                                 if key in RENAMED_FIELDS:
@@ -459,6 +472,16 @@ class FormPage(object):
         self.dynamic = False
         self.params = params
 
+    def __repr__(self):
+        class_name = self.form.__class__.__name__
+        class_name = class_name[0].upper() + class_name[1:]
+        page_repr = f'FormPage(\n        {class_name},\n        name="{self.name}"'
+        if self.params:
+            params = get_params_for_repr(self.params)
+            page_repr += f",{params}"
+        page_repr += "\n    )"
+        return page_repr
+
 
 class FormPanel(object):
     """
@@ -490,3 +513,14 @@ class FormPanel(object):
         self.name = name
         self.dynamic = dynamic
         self.params = params
+
+    def __repr__(self):
+        class_name = self.form.__class__.__name__
+        class_name = class_name[0].upper() + class_name[1:]
+        panel_repr = f'FormPanel(\n        {class_name},\n        name="{self.name}",'
+        panel_repr += f"\n        dynamic={self.dynamic}"
+        if self.params:
+            params = get_params_for_repr(self.params)
+            panel_repr += f",{params}"
+        panel_repr += "\n    )"
+        return panel_repr

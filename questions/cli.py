@@ -8,8 +8,13 @@ Console scripts for questions.
      Downloads all CSS and JS resources needed to run SurveyJS
 """
 import click
+import json
 import requests
 
+from .form import Form
+from .form import FormPage
+from .form import FormPanel
+from .questions import Question
 from .questions import QUESTION_TYPES
 from .settings import SURVEY_JS_CDN
 from .templates import get_platform_js_resources
@@ -97,3 +102,44 @@ def list_resources(platform, theme, include_widgets):
                 for url in extra_css:
                     click.echo(f"    {url}")
     click.echo()
+
+
+@click.command()
+@click.argument("name")
+@click.argument("json_file", type=click.File("r"))
+def generate_code(name, json_file):
+    """
+    Generate Questions form code from SurveyJS JSON file.
+    """
+    imports = ["from questions import Form"]
+    code = []
+    NewForm = Form.from_json(json_file.read(), name)
+    current = [NewForm]
+    while current != []:
+        fragment = []
+        next_batch = []
+        for member in current:
+            fragment.append(f"\n\nclass {member.__name__}(Form):\n")
+            for element_name, element in member.__dict__.items():
+                if isinstance(element, (FormPage, FormPanel)):
+                    next_batch.append(element.form.__class__)
+                if isinstance(element, (FormPage, FormPanel, Question)):
+                    statement = f"from questions import {element.__class__.__name__}"
+                    if statement not in imports:
+                        imports.append(statement)
+                if element_name.startswith("_"):
+                    continue
+                element_repr = repr(element)
+                element_repr = element_repr.replace(": false,", ": False,")
+                element_repr = element_repr.replace(": true,", ": True,")
+                element_repr = element_repr.replace(": false}", ": False}")
+                element_repr = element_repr.replace(": true}", ": True}")
+                fragment.append(f"    {element_name} = {element_repr}\n")
+        code.append(fragment)
+        current = next_batch
+    click.echo()
+    for statement in imports:
+        click.echo(statement)
+    code.reverse()
+    for fragment in code:
+        click.echo("".join(fragment))
