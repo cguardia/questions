@@ -58,6 +58,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/cguardia/questions',
-    version='0.7.0a4',
+    version='0.7.0a5',
     zip_safe=False,
 )

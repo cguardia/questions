@@ -47,3 +47,8 @@ History
 
 * Feature: add console script for generating code for classes created with
   from_json method.
+
+0.7.0a5 (dev)
+-------------
+
+* Unreleased.
