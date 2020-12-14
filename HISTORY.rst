@@ -31,8 +31,8 @@ History
 
 * Make sure jinja templates are included in manifest.
 
-0.5.0a4 (dev)
--------------
+0.7.0a4 (2020-12-13)
+--------------------
 
 * Update installation docs to mention typing-extensions requirement for
   Python < 3.8.
