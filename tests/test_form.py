@@ -127,8 +127,8 @@ def test_construct_survey_with_pages():
 
     test_form = TestForm(name="testing")
     survey = test_form._construct_survey()
-    assert survey.pages[1].name == "Page1"
-    assert survey.pages[1].questions[0].name == "text1"
+    assert survey.pages[0].name == "Page1"
+    assert survey.pages[0].questions[0].name == "text1"
 
 
 def test_construct_survey_with_pages_no_page_name():
@@ -140,8 +140,8 @@ def test_construct_survey_with_pages_no_page_name():
 
     test_form = TestForm(name="testing")
     survey = test_form._construct_survey()
-    assert survey.pages[1].name == "PageForm"
-    assert survey.pages[1].questions[0].name == "text1"
+    assert survey.pages[0].name == "PageForm"
+    assert survey.pages[0].questions[0].name == "text1"
 
 
 def test_construct_survey_with_second_level_panel():
@@ -156,9 +156,9 @@ def test_construct_survey_with_second_level_panel():
 
     test_form = TestForm(name="testing")
     survey = test_form._construct_survey()
-    assert survey.pages[1].name == "PageForm"
-    assert survey.pages[1].questions[0].name == "Panel1"
-    assert survey.pages[1].questions[0].elements[0].name == "text1"
+    assert survey.pages[0].name == "PageForm"
+    assert survey.pages[0].questions[0].name == "Panel1"
+    assert survey.pages[0].questions[0].elements[0].name == "text1"
 
 
 def test_construct_survey_with_second_level_panel_no_name():
@@ -173,9 +173,9 @@ def test_construct_survey_with_second_level_panel_no_name():
 
     test_form = TestForm(name="testing")
     survey = test_form._construct_survey()
-    assert survey.pages[1].name == "PageForm"
-    assert survey.pages[1].questions[0].name == "PanelForm"
-    assert survey.pages[1].questions[0].elements[0].name == "text1"
+    assert survey.pages[0].name == "PageForm"
+    assert survey.pages[0].questions[0].name == "PanelForm"
+    assert survey.pages[0].questions[0].elements[0].name == "text1"
 
 
 def test_construct_survey_with_second_level_panel_dynamic():
@@ -190,9 +190,9 @@ def test_construct_survey_with_second_level_panel_dynamic():
 
     test_form = TestForm(name="testing")
     survey = test_form._construct_survey()
-    assert survey.pages[1].name == "PageForm"
-    assert survey.pages[1].questions[0].name == "Panel1"
-    assert survey.pages[1].questions[0].template_elements[0].name == "text1"
+    assert survey.pages[0].name == "PageForm"
+    assert survey.pages[0].questions[0].name == "Panel1"
+    assert survey.pages[0].questions[0].template_elements[0].name == "text1"
 
 
 def test_validate_no_validators():
