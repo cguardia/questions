@@ -240,6 +240,7 @@ class Form(object):
         Method to put form elements inside a container. Needs to be recursive so that
         pages and panels are properly nested.
         """
+        has_default_page = True
         extra_js = []
         extra_css = []
         for element_name, element in form.__class__.__dict__.items():
@@ -248,6 +249,9 @@ class Form(object):
                 if name == "":
                     element.name = element_name
                 if isinstance(element, FormPage) and top_level:
+                    if has_default_page:
+                        survey.pages = []
+                        has_default_page = False
                     page = Page(name=name, **element.params)
                     self._add_elements(page, element.form)
                     survey.pages.append(page)

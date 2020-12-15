@@ -51,4 +51,4 @@ History
 0.7.0a5 (dev)
 -------------
 
-* Unreleased.
+* Bug fix: do not add a default page when other pages are defined.
