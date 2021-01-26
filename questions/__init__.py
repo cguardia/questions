@@ -46,6 +46,7 @@ from .validators import ValidationError
 
 
 __all__ = [
+    "SURVEY_JS_CDN",
     "BarRatingQuestion",
     "BooleanQuestion",
     "BootstrapDatePickerQuestion",

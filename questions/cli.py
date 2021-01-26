@@ -8,7 +8,6 @@ Console scripts for questions.
      Downloads all CSS and JS resources needed to run SurveyJS
 """
 import click
-import json
 import requests
 
 from .form import Form
