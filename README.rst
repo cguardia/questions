@@ -6,8 +6,8 @@ Questions
 .. image:: https://img.shields.io/pypi/v/questions.svg
         :target: https://pypi.python.org/pypi/questions
 
-.. image:: https://img.shields.io/travis/cguardia/questions.svg
-        :target: https://travis-ci.com/cguardia/questions
+.. image:: https://github.com/cguardia/questions/workflows/continuous-integration/badge.svg
+        :target: https://github.com/cguardia/questions
 
 .. image:: https://readthedocs.org/projects/questions/badge/?version=latest
         :target: https://questions.readthedocs.io/en/latest/?badge=latest
