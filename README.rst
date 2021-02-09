@@ -7,7 +7,7 @@ Questions
         :target: https://pypi.python.org/pypi/questions
 
 .. image:: https://github.com/cguardia/questions/workflows/continuous-integration/badge.svg
-        :target: https://github.com/cguardia/questions
+        :target: https://github.com/cguardia/questions/actions?query=workflow%3Acontinuous-integration
 
 .. image:: https://readthedocs.org/projects/questions/badge/?version=latest
         :target: https://questions.readthedocs.io/en/latest/?badge=latest
