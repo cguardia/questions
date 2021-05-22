@@ -2,7 +2,7 @@ pip==21.1.1
 bump2version==1.0.1
 wheel==0.36.2
 watchdog==2.1.2
-flake8==3.9.1
+flake8==3.9.2
 tox==3.23.1
 coverage==5.5
 Sphinx==3.5.4
@@ -10,6 +10,6 @@ twine==3.4.1
 Click==7.1.2
 pytest==6.2.4
 pytest-runner==5.3.0
-black==21.5b0
+black==21.5b1
 sphinx-autodoc-typehints==1.12.0
 sphinxcontrib.spelling==5.4.0
