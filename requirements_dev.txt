@@ -10,6 +10,6 @@ twine==3.5.0
 Click==8.0.3
 pytest==6.2.5
 pytest-runner==5.3.1
-black==21.10b0
+black==21.12b0
 sphinx-autodoc-typehints==1.12.0
 sphinxcontrib.spelling==5.4.0
