@@ -4,5 +4,5 @@ simpleeval==0.9.12
 typing-extensions==4.0.0;python_version<"3.8"
 Sphinx==4.3.2
 Click==8.0.3
-sphinx-autodoc-typehints==1.15.3
+sphinx-autodoc-typehints==1.18.3
 sphinxcontrib.spelling==5.4.0
