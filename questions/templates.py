@@ -73,6 +73,8 @@ def get_theme_css_resources(
     :Returns:
         The list of resource URLs.
     """
+    if theme == "defaultV2":
+        name = "defaultV2.min"
     if theme == "bootstrap" and resource_url == SURVEY_JS_CDN:
         return [BOOTSTRAP_URL]
     elif theme == "bootstrap":

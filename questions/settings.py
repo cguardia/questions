@@ -1,8 +1,8 @@
 """Defines constants to be used throughout the code."""
 
-SURVEY_JS_VERSION = "1.8.2"
+SURVEY_JS_VERSION = "1.9.42"
 
-SURVEY_JS_CDN = f"https://surveyjs.azureedge.net/{SURVEY_JS_VERSION}"
+SURVEY_JS_CDN = f"https://unpkg.com/survey-core@{SURVEY_JS_VERSION}"
 
 SURVEY_JS_WIDGETS = "surveyjs-widgets.js"
 
@@ -36,6 +36,15 @@ SUGGESTED_JS_BY_PLATFORM = {
         "https://unpkg.com/react@15/dist/react.js",
         "https://unpkg.com/react-dom@15/dist/react-dom.js",
         "https://unpkg.com/@babel/standalone@7.2.5/babel.min.js",
+        "https://unpkg.com/surveyjs-widgets@1.9.42/surveyjs-widgets.js",
+        "https://unpkg.com/inputmask@5.0.3/dist/inputmask.js",
+        "https://unpkg.com/jquery@3.5.1/dist/jquery.js",
+        "https://unpkg.com/react@17.0.1/umd/react.production.min.js",
+        "https://unpkg.com/react-dom@17.0.1/umd/react-dom.production.min.js",
+        "https://unpkg.com/@babel/standalone@7.2.5/babel.min.js",
+        "https://unpkg.com/survey-core@1.9.42/survey.core.min.js",
+        "https://unpkg.com/survey-core@1.9.42/survey.i18n.min.js",
+        "https://unpkg.com/survey-react-ui@1.9.42/survey-react-ui.min.js",
     ],
     "vue": [
         "https://unpkg.com/vue/dist/vue.js",
@@ -561,6 +570,7 @@ MATRIX_ROW_LOCATIONS = (
 
 SURVEY_JS_THEMES = (
     "default",
+    "defaultV2",
     "bootstrap",
     "orange",
     "darkblue",

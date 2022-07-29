@@ -69,5 +69,5 @@ var sendDataToServer = function(sender, options) {
 
 window.survey = new Survey.Model(json);
 window.survey.onServerValidateQuestions.add(sendDataToServer);
-ReactDOM.render(<Survey.Survey json={json} data={data} />,
+ReactDOM.render(<SurveyReact.Survey json={json} data={data} />,
   document.getElementById("{{ html_id }}"));
