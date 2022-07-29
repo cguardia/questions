@@ -28,9 +28,8 @@ app = Flask(__name__)
 
 @app.route("/", methods=("GET",))
 def form():
-    form = Profile(platform='react')#,resource_url='/Users/hugoevers/VScode-projects/CA_data_platform/src/app/static/node_modules')
-    form._construct_survey()
-    form.to_json()
+    form = Profile(platform='react',theme='defaultV2')#,resource_url='/Users/hugoevers/VScode-projects/CA_data_platform/src/app/static/node_modules')
+
     return form.render_html()
 
 @app.route("/", methods=("POST",))
