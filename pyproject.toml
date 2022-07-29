@@ -5,13 +5,13 @@ description = ""
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 pydantic = "*"
-email-validator = "^1.2.1"
-Jinja2 = "^3.1.2"
-requests = "^2.28.1"
-simpleeval = "^0.9.12"
-typing-extensions = "^4.3.0"
+email-validator = "^1"
+Jinja2 = "^3"
+requests = "^2"
+simpleeval = "^*"
+typing-extensions = "^4"
 
 [tool.poetry.dev-dependencies]
 Flask = "^2.1.3"
