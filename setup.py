@@ -18,10 +18,6 @@ requirements = ['Click>=7.0',
                 'simpleeval',
                 ]
 
-setup_requirements = ['pytest-runner', ]
-
-test_requirements = ['pytest>=3.6', ]
-
 setup(
     author="Carlos de la Guardia",
     author_email='cguardia@yahoo.com',
@@ -54,9 +50,7 @@ setup(
     keywords='questions',
     name='questions',
     packages=find_packages(include=['questions', 'questions.*']),
-    setup_requires=setup_requirements,
     test_suite='tests',
-    tests_require=test_requirements,
     url='https://github.com/cguardia/questions',
     version='0.7.0a5',
     zip_safe=False,

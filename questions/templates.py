@@ -45,7 +45,7 @@ def get_platform_js_resources(
     :Returns:
         The list of resource URLs.
     """
-    survey_js = f"{resource_url}/survey.{platform}.min.js"
+    survey_js = f"{resource_url}/survey-{platform}/survey.{platform}.min.js"
     platform_js = []
     for js in SUGGESTED_JS_BY_PLATFORM[platform]:
         if resource_url == SURVEY_JS_CDN:
@@ -80,7 +80,7 @@ def get_theme_css_resources(
     name = "survey"
     if theme == "modern":
         name = "modern"
-    return [f"{resource_url}/{name}.css"]
+    return [f"{resource_url}/survey-core/{name}.min.css"]
 
 
 def get_survey_js(
