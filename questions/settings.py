@@ -2,9 +2,9 @@
 
 SURVEY_JS_VERSION = "1.8.2"
 
-SURVEY_JS_CDN = f"https://surveyjs.azureedge.net/{SURVEY_JS_VERSION}"
+SURVEY_JS_CDN = "https://unpkg.com"
 
-SURVEY_JS_WIDGETS = "surveyjs-widgets.js"
+SURVEY_JS_WIDGETS = "surveyjs-widgets/surveyjs-widgets.min.js"
 
 SURVEY_JS_PLATFORMS = (
     "angular",
