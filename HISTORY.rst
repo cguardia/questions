@@ -48,7 +48,8 @@ History
 * Feature: add console script for generating code for classes created with
   from_json method.
 
-0.7.0a5 (dev)
--------------
+0.7.1 (2022-09-18)
+------------------
 
 * Bug fix: do not add a default page when other pages are defined.
+* Update js CDN and tests.
