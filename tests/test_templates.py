@@ -9,20 +9,20 @@ from questions.settings import SURVEY_JS_CDN
 
 def test_get_platform_js_resources():
     js = templates.get_platform_js_resources("jquery", SURVEY_JS_CDN)
-    assert f"{SURVEY_JS_CDN}/survey.jquery.min.js" in js
+    assert f"{SURVEY_JS_CDN}/survey-jquery/survey.jquery.min.js" in js
     js = templates.get_platform_js_resources("jquery", "http://testing")
-    assert "http://testing/survey.jquery.min.js" in js
+    assert "http://testing/survey-jquery/survey.jquery.min.js" in js
 
 
 def test_get_theme_css_resources():
     css = templates.get_theme_css_resources("default", SURVEY_JS_CDN)
-    assert f"{SURVEY_JS_CDN}/survey.css" in css
+    assert f"{SURVEY_JS_CDN}/survey-core/survey.min.css" in css
     css = templates.get_theme_css_resources("bootstrap", SURVEY_JS_CDN)
     assert BOOTSTRAP_URL in css
     css = templates.get_theme_css_resources("default", "http://testing")
-    assert "http://testing/survey.css" in css
+    assert "http://testing/survey-core/survey.min.css" in css
     css = templates.get_theme_css_resources("modern", "http://testing")
-    assert "http://testing/modern.css" in css
+    assert "http://testing/survey-core/modern.min.css" in css
     css = templates.get_theme_css_resources("bootstrap", "http://testing")
     assert "http://testing/bootstrap.min.css" in css
 
