@@ -28,8 +28,6 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Topic :: Internet :: WWW/HTTP',
@@ -53,6 +51,6 @@ setup(
     packages=find_packages(include=['questions', 'questions.*']),
     test_suite='tests',
     url='https://github.com/cguardia/questions',
-    version='0.7.0a5',
+    version='0.7.1',
     zip_safe=False,
 )
