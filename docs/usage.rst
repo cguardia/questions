@@ -415,3 +415,51 @@ requests. If the validation is successful, the data is saved, and then we
 return a redirection to the success or thanks page. If validation fails,
 we redisplay the form with the data that was sent, and the errors will be
 highlighted.
+
+Internationalization
+====================
+
+SurveyJS supports many different languages, and ``questions`` makes it easy to
+tale advantage of that. Simply pass in the locale when instantiating a form::
+
+    form = YourFormSubclass(title="Formulaire en français", locale="fr")
+
+The current list of supported locales is below.
+
+- ar
+- bg
+- ca
+- cs
+- da
+- de
+- en
+- es
+- et
+- fa
+- fi
+- fr
+- gr
+- he
+- hu
+- id
+- is
+- it
+- ja
+- ka
+- ko
+- lt
+- lv
+- nl
+- no
+- pl
+- pt
+- ro
+- ru
+- sv
+- sw
+- tg
+- th
+- tr
+- ua
+- zh-cn
+- zh-tw
