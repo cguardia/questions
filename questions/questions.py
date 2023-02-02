@@ -161,7 +161,7 @@ class ChoicesQuestion(Question):
 
     kind: str = ""
     col_count: int = 4
-    choices: List[Union[str, Dict[str, Union[str, HttpUrl]]]] = []
+    choices: List[Union[str, Dict[str, Union[str, HttpUrl, Dict[str, str]]]]] = []
     choices_by_url: Dict[Literal[settings.CHOICES_BY_URL_KEYS], str] = []
     choices_order: Literal[settings.CHOICE_ORDER_VALUES] = "none"
     choices_enable_if: str = ""
