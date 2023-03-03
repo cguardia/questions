@@ -12,6 +12,7 @@ Submodules
    questions.questions
    questions.settings
    questions.templates
+   questions.utils
    questions.validators
 
 Module contents

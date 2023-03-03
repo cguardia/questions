@@ -19,7 +19,7 @@ History
 
 * Update docs.
 
-* Update dependencies to lastest versions.
+* Update dependencies to latest versions.
 
 0.5.0a2 (2020-12-09)
 --------------------
@@ -37,7 +37,7 @@ History
 * Update installation docs to mention typing-extensions requirement for
   Python < 3.8.
 
-* Use correct default value for allow_clear in sugnature pad.
+* Use correct default value for allow_clear in signature pad.
 
 * Set type hints to allow localization arrays in visible text properties.
 
