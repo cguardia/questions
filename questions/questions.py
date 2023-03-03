@@ -25,7 +25,6 @@ class _Base(BaseModel):
         return f"{class_name}({params}\n    )"
 
     class Config:
-
         fields = {
             "kind": "type",
             "all_rows_required": "isAllRowRequired",
