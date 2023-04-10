@@ -60,7 +60,7 @@ class Form(object):
     :param html_id:
         The id for the div element that will be used to render the form.
     :param theme:
-        The name of the base theme for the form. Default value is 'default'.
+        The name of the base theme for the form. Default value is 'defaultV2'.
     :param platform:
         The JS platform to use for generating the form. Default value is 'jquery'.
     :param resource_url:
@@ -84,7 +84,7 @@ class Form(object):
         name: str = "",
         action: str = "",
         html_id: str = "questions_form",
-        theme: Literal[SURVEY_JS_THEMES] = "default",
+        theme: Literal[SURVEY_JS_THEMES] = "defaultV2",
         platform: Literal[SURVEY_JS_PLATFORMS] = "jquery",
         resource_url: str = None,
         **params,

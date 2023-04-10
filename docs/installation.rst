@@ -113,16 +113,13 @@ The platforms are:
 
 The themes are:
 
- - default
- - bootstrap
- - darkblue
- - darkrose
+ - default (legacy)
+ - defaultV2
+ - bootstrap (legacy)
  - modern
- - orange
- - stone
- - winter
- - winterstone
 
+The default theme is named ``defaultV2``. There is an older default theme that is
+now considered legacy. The old bootstrap theme is also legacy and deprecated.
 This command will download all the required resources to the directory specified.
 This is by far the simplest way to get running if you don't plan to do any
 javascript development as part of your application.

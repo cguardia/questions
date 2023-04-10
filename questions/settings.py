@@ -1,6 +1,6 @@
 """Defines constants to be used throughout the code."""
 
-SURVEY_JS_VERSION = "1.8.2"
+SURVEY_JS_VERSION = "1.9.81"
 
 SURVEY_JS_CDN = "https://unpkg.com"
 
@@ -560,14 +560,8 @@ MATRIX_ROW_LOCATIONS = (
 )
 
 SURVEY_JS_THEMES = (
-    "default",
+    "defaultV2",
     "bootstrap",
-    "orange",
-    "darkblue",
-    "darkrose",
-    "stone",
-    "winter",
-    "winterstone",
     "modern",
 )
 

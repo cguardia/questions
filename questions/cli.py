@@ -32,7 +32,7 @@ def download_surveyjs(path, platform, theme):
 
     Platforms are: angular, jquery, knockout, react, vue.
 
-    Themes are: default, bootstrap, darkblue, darkrose, modern, orange, stone
+    Themes are: default, defaultV2, bootstrap, darkblue, darkrose, modern, orange, stone
                 winter, winterstone.
     """
     click.echo()
@@ -66,7 +66,7 @@ def list_resources(platform, theme, include_widgets):
 
     Platforms are: angular, jquery, knockout, react, vue.
 
-    Themes are: default, bootstrap, darkblue, darkrose, modern, orange, stone
+    Themes are: default, defaultV2, bootstrap, darkblue, darkrose, modern, orange, stone
                 winter, winterstone.
     """
     click.echo()

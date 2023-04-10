@@ -33,13 +33,13 @@ def test_get_survey_js():
         form_data="FORM_DATA",
         html_id="id",
         action="http://testing",
-        theme="default",
+        theme="defaultV2",
         platform="jquery",
     )
     assert "FORM_JSON" in survey_js
     assert "FORM_DATA" in survey_js
     assert "http://testing" in survey_js
-    assert "default" in survey_js
+    assert "defaultV2" in survey_js
 
 
 def test_get_survey_js_form_data_is_none():
@@ -48,12 +48,12 @@ def test_get_survey_js_form_data_is_none():
         form_data=None,
         html_id="id",
         action="http://testing",
-        theme="default",
+        theme="defaultV2",
         platform="jquery",
     )
     assert "FORM_JSON" in survey_js
     assert "http://testing" in survey_js
-    assert "default" in survey_js
+    assert "defaultV2" in survey_js
 
 
 def test_get_form_page():

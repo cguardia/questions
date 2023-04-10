@@ -10,6 +10,7 @@ from jinja2 import select_autoescape
 from .settings import BOOTSTRAP_URL
 from .settings import SUGGESTED_JS_BY_PLATFORM
 from .settings import SURVEY_JS_CDN
+from .settings import SURVEY_JS_THEMES
 
 
 # Initialize Jinja environment
@@ -58,12 +59,12 @@ def get_platform_js_resources(
 
 
 def get_theme_css_resources(
-    theme: str = "default",
+    theme: str = "defaultV2",
     resource_url: str = SURVEY_JS_CDN,
 ):
     """
     Get the list of suggested CSS resources for a theme. if not using the
-    CDN, only the main SurveyJS CSS file is returned.
+    CDN, or using an unsupported theme, only the main SurveyJS CSS file is returned.
 
     :param theme:
         The name of the CSS theme.
@@ -77,10 +78,9 @@ def get_theme_css_resources(
         return [BOOTSTRAP_URL]
     elif theme == "bootstrap":
         return [f"{resource_url}/bootstrap.min.css"]
-    name = "survey"
-    if theme == "modern":
-        name = "modern"
-    return [f"{resource_url}/survey-core/{name}.min.css"]
+    if theme not in SURVEY_JS_THEMES:
+        theme = "survey"
+    return [f"{resource_url}/survey-core/{theme}.min.css"]
 
 
 def get_survey_js(
@@ -88,7 +88,7 @@ def get_survey_js(
     form_data: Dict[str, Any] = None,
     html_id: str = "questions_form",
     action: str = "",
-    theme: str = "default",
+    theme: str = "defaultV2",
     platform: str = "jquery",
 ):
     """
