@@ -53,3 +53,14 @@ History
 
 * Bug fix: do not add a default page when other pages are defined.
 * Update js CDN and tests.
+
+0.8.0 (2023-04-10)
+------------------
+
+* Bug fix: fix choices with translatable text (thanks @joan-qida).
+* Bug fix: fix read the docs build.
+* Update SurveyJS version.
+* Use current SurveyJS supported themes.
+* Include newer Python versions in tests.
+* Add documentation for i18n.
+* Various dependency updates.

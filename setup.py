@@ -52,6 +52,6 @@ setup(
     packages=find_packages(include=["questions", "questions.*"]),
     test_suite="tests",
     url="https://github.com/cguardia/questions",
-    version="0.7.1",
+    version="0.8.0",
     zip_safe=False,
 )
