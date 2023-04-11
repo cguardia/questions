@@ -64,3 +64,8 @@ History
 * Include newer Python versions in tests.
 * Add documentation for i18n.
 * Various dependency updates.
+
+Development (unreleased)
+------------------------
+
+* Add documentation for dynamic panel references (thanks @rilshok).
