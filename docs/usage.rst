@@ -243,6 +243,18 @@ The above form will allow the user to add any number of social accounts. Pay
 attention to the ``panel_count`` parameter, which signals that two panels will
 be active when the form is first rendered.
 
+For conditions, like ``visble_if``, it is necessary to use the ``panel.``
+prefix to create a reference to the current element of a dynamic panel. For
+example::
+
+    "{panel.service} == 'Instagram'"
+
+It is also possible to check the values of dynamic panel elements by referring
+to them by indexes. For example, for the following condition, the checking will
+be done based on the first element of the dynamic panel::
+
+    "{panel[0].service} == 'Instagram'"
+    
 Pages
 =====
 
