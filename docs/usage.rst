@@ -250,10 +250,13 @@ example::
     "{panel.service} == 'Instagram'"
 
 It is also possible to check the values of dynamic panel elements by referring
-to them by indexes. For example, for the following condition, the checking will
-be done based on the first element of the dynamic panel::
+to them by indexes. However, this requires passing in a ``name`` parameter to
+the ``FormPanel`` element. Once that is done, you can refer to a specific
+panel number by using the passed in name and an index. For example, for the
+following condition, the checking will be done based on the first element of the
+dynamic panel named ``social_media``::
 
-    "{panel[0].service} == 'Instagram'"
+    "{social_media[0].service} == 'Instagram'"
     
 Pages
 =====
@@ -276,7 +279,7 @@ and forth between the pages. The final page will show a `complete` button::
 
     class PageTwo(Form):
         country = DropdownQuestion(choices_by_url={"value_name": "name",
-            "url": "https://restcountries.eu/rest/v2/all"})
+            "url": "https://restcountries.com/v2/all"})
         birthdate = TextQuestion(input_type="date")
 
 

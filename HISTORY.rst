@@ -69,3 +69,4 @@ Development (unreleased)
 ------------------------
 
 * Add documentation for dynamic panel references (thanks @rilshok).
+* Fix Rest Countries API URL in docs.
