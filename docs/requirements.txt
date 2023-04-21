@@ -1,4 +1,4 @@
-email_validator==2.0.0.post1
+email_validator==2.0.0.post2
 pydantic==1.10.7
 simpleeval==0.9.13
 Sphinx==6.1.3
