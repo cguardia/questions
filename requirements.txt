@@ -1,6 +1,6 @@
 email_validator==2.0.0.post2
 Jinja2==3.1.2
-pydantic==1.10.11
+pydantic==2.5.0
 requests==2.31.0
 simpleeval==0.9.13
 typing-extensions==4.5.0;python_version<"3.8"
