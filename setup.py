@@ -14,7 +14,7 @@ requirements = [
     "Click>=7.0",
     "email_validator",
     "Jinja2",
-    "pydantic",
+    "pydantic==1.10.11",
     "requests",
     "simpleeval",
 ]
