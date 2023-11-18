@@ -256,7 +256,13 @@ class Form(object):
                     self._add_elements(page, element.form)
                     survey.pages.append(page)
                 elif isinstance(element, (FormPage, FormPanel)):
-                    container = getattr(survey, container_name)
+                    container = getattr(survey, container_name, None)
+                    if container is None:
+                        pages = survey.pages
+                        if len(pages) > 0:
+                            container = getattr(pages[0], container_name)
+                    if container is None:
+                        raise "Error in form definition: container not found."
                     if element.dynamic:
                         panel = PanelDynamicBlock(name=name, **element.params)
                         new_container_name = "template_elements"

@@ -2,7 +2,7 @@ email_validator==2.0.0.post2
 pydantic==1.10.8
 simpleeval==0.9.13
 Sphinx==7.2.6
-Click==8.1.3
+Click==8.1.5
 sphinx-autodoc-typehints==1.23.4
 sphinxcontrib.spelling==5.4.0
 sphinxcontrib.apidoc==0.3.0
