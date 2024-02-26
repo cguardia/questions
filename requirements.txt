@@ -3,4 +3,4 @@ Jinja2==3.1.2
 pydantic==1.10.11
 requests==2.31.0
 simpleeval==0.9.13
-typing-extensions==4.8.0;python_version<"3.8"
+typing-extensions==4.10.0;python_version<"3.8"
