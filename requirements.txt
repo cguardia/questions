@@ -1,4 +1,4 @@
-email_validator==2.0.0.post2
+email_validator==2.1.1
 Jinja2==3.1.2
 pydantic==1.10.11
 requests==2.31.0
