@@ -9,6 +9,6 @@ Sphinx==7.0.1
 twine==4.0.2
 Click==8.1.5
 pytest==7.3.1
-black==23.3.0
+black==24.4.1
 sphinx-autodoc-napoleon-typehints==2.1.6
 sphinxcontrib.spelling==5.4.0
