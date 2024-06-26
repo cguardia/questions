@@ -6,7 +6,7 @@ flake8==6.0.0
 tox==4.11.3
 coverage==7.3.1
 Sphinx==7.0.1
-twine==4.0.2
+twine==5.1.1
 Click==8.1.5
 pytest==7.3.1
 black==23.3.0
